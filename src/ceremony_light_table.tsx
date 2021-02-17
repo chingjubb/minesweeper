@@ -25,7 +25,7 @@ export const CeremonyLightTable = (props: Props) => {
 	let total = 0;
 	const userNames = Object.keys(users);
 	userNames.forEach((userName: string) => {
-		const lightCountMap: LightCountMap | undefined = users.get(userName);
+		const lightCountMap: LightCountMap | undefined = users[userName];
 		if (lightCountMap) {
 			const subtotal = getSubTotal(lightCountMap, allLights);
 			total += subtotal;
@@ -88,7 +88,7 @@ const getSubTotal = (lightCountMap: LightCountMap, allLights: Light[]): number =
 	lightNames.forEach((lightName: string) => {
 		const theLight: Light | undefined = allLights.find((light: Light) => light.name === lightName);
 		if (theLight) {
-			const count = lightCountMap.get(lightName) ?? 0;
+			const count = lightCountMap[lightName] ?? 0;
 			subtotal += count * theLight.price;
 		}
 	});
@@ -136,7 +136,7 @@ const Row = (props: RowProps) => {
 						if (!theLight) {
 							return null;
 						}
-						const count = lightCountMap.get(lightName) ?? 0;
+						const count = lightCountMap[lightName] ?? 0;
 						if (count > 0) {
 							return <div key={lightName}>{'('}{theLight.series}{')'} {lightName} X{count},</div>
 						} else {
