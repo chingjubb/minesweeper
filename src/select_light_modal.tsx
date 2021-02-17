@@ -113,7 +113,7 @@ const LightRow = (props: LightRowProps) => {
 						 }} 
 						 style={{width: 30,
 								 height: 20,
-								 top: 26,
+								 top: 35,
 								 right: 12,
 								 position: 'absolute',
 								 cursor: 'pointer'}}>
@@ -126,7 +126,7 @@ const LightRow = (props: LightRowProps) => {
 						 }}
 						 style={{width: 30,
 								 height: 20,
-								 top: 43,
+								 top: 55,
 								 right: 12,
 								 position: 'absolute',
 								 cursor: 'pointer'}}>
