@@ -90,7 +90,7 @@ export const CeremonyLightPage = (props: Props) => {
 	}
 
 	return (
-		<div style={{ margin: 50}}>
+		<div style={{ margin: 50, marginLeft: 30}}>
 			{state.allUsers.length > 0 && <SelectUserButton onClick={() => { setShowSelectUserModal(true) }} />}
 			<AddUserButton onClick={() => { setShowNewUserModal(true) }} />
 

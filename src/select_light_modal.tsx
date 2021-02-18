@@ -113,7 +113,7 @@ const LightRow = (props: LightRowProps) => {
 						 }} 
 						 style={{width: 30,
 								 height: 20,
-								 top: 45,
+								 top: 34,
 								 right: 15,
 								 position: 'absolute',
 								 cursor: 'pointer'}}>
@@ -126,14 +126,14 @@ const LightRow = (props: LightRowProps) => {
 						 }}
 						 style={{width: 30,
 								 height: 20,
-								 top: 45,
+								 top: 34,
 								 left: 15,
 								 position: 'absolute',
 								 cursor: 'pointer'}}>
 						<RemoveCircleOutlineIcon />
 				 	</div>
 				</TableCell>
-				<TableCell style={{width: 200}}>
+				<TableCell style={{width: 220}}>
 					{light.series} {light.name}<br/>
 					<span style={{color: 'gray'}}>{'('}{light.functional}{')'}</span><br/>
 					{light.price} 元
