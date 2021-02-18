@@ -10,8 +10,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import { Light, LightCountMap } from './light_reducer';
-import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 type Props = {
 	onClose: () => void;
@@ -93,8 +93,8 @@ type LightRowProps = {
 const LightRow = (props: LightRowProps) => {
 	const { light, count, onChange } = props;
 	return <TableRow key={light.name}>
-				<TableCell style={{width:'100px', position:'relative'}}>
-					<TextField
+				<TableCell style={{width:100, position:'relative'}}>
+					<TextField style={{paddingLeft: 30, paddingRight: 32}}
 						label={''}
 						value={count} variant='outlined'
 						onChange={(e) => {
@@ -113,11 +113,11 @@ const LightRow = (props: LightRowProps) => {
 						 }} 
 						 style={{width: 30,
 								 height: 20,
-								 top: 35,
-								 right: 12,
+								 top: 45,
+								 right: 15,
 								 position: 'absolute',
 								 cursor: 'pointer'}}>
-						<ExpandLessIcon />
+						<AddCircleOutlineIcon />
 					</div>
 					<div onClick={()=>{
 						 	if (count - 1 >= 0) {
@@ -126,11 +126,11 @@ const LightRow = (props: LightRowProps) => {
 						 }}
 						 style={{width: 30,
 								 height: 20,
-								 top: 55,
-								 right: 12,
+								 top: 45,
+								 left: 15,
 								 position: 'absolute',
 								 cursor: 'pointer'}}>
-						<ExpandMoreIcon />
+						<RemoveCircleOutlineIcon />
 				 	</div>
 				</TableCell>
 				<TableCell style={{width: 200}}>

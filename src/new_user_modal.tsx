@@ -55,27 +55,27 @@ export const NewUserModal = (props: Props) => {
 					/>
 				</div>
 				<div>
-					<TextField required
+					<TextField
 						style={{width: "150px", margin: "5px"}}
 						label={'曆別'} variant="outlined"
 						value={yearType} placeholder="國曆"
 						onChange={(e) => { setYearType(e.target.value); }}
 					/>
-					<TextField required
+					<TextField
 						style={{width: "150px", margin: "5px"}}
 						label={'生年'} variant="outlined"
 						value={year} placeholder="（西元/民國）吉"
 						error={Number.isInteger(parseInt(year)) && parseInt(year) <= 0}
 						onChange={(e) => { setYear(e.target.value); }}
 					/>
-					<TextField required
+					<TextField
 						style={{width: "150px", margin: "5px"}}
 						label={'生月'} variant="outlined"
 						value={month} placeholder="吉"
 						error={Number.isInteger(parseInt(month)) && (parseInt(month) <= 0 || parseInt(month) > 12) }
 						onChange={(e) => { setMonth(e.target.value); }}
 					/>
-					<TextField required
+					<TextField
 						style={{width: "150px", margin: "5px"}}
 						label={'生日'} variant="outlined"
 						value={day} placeholder="吉"
@@ -84,7 +84,7 @@ export const NewUserModal = (props: Props) => {
 					/>
 				</div>
 				<div>
-					<TextField required
+					<TextField
 						style={{width: "650px", margin: "5px"}}
 						placeholder={'請填入點燈者地址，空白為「吉」'}
 						label="地址" variant="outlined" value={address}
@@ -94,7 +94,7 @@ export const NewUserModal = (props: Props) => {
 				<div>
 					<TextField
 						style={{width: "650px", margin: "5px"}}
-						label="備註（可略）" variant="outlined" value={comment}
+						label="備註" variant="outlined" value={comment}
 						onChange={(e) => { setComment(e.target.value); }}
 					/>
 				</div>
