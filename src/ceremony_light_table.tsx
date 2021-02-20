@@ -68,7 +68,7 @@ export const CeremonyLightTable = (props: Props) => {
 			{total > 0 && <div style={{marginTop: 20}}>總價： {total}元</div>}
 			<div style={{marginTop: 20}}>
 				<SubmitLightButton disabled={total <= 0} />
-				<GoBackToSelectPage />
+				<GoBackToSelectPage onClick={() => { window.location.reload(); }}/>
 			</div>
 		</div>
   );

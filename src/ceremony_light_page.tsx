@@ -62,6 +62,10 @@ export const CeremonyLightPage = (props: Props) => {
 
 	console.log('state', state);
 
+	if (state.allLocations.length === 0 || state.allCeremonies.length === 0) {
+		return <div style={{margin: 'auto', marginTop:'40%'}}>載入中...</div>
+	}
+
 	if (state.allLocations.length > 0 &&
 		state.allCeremonies.length > 0 &&
 		!state.ceremony &&
