@@ -160,7 +160,7 @@ export const NextStepButton = (props: Props) => {
 				color="primary"
 				disabled={disabled}
 				onClick={onClick}
-				style={{margin: 5, marginRight: 20, width: 300, marginTop: 20}}
+				style={{margin: 5, marginRight: 20, width: 300, marginTop: 10}}
 			>下一步</ColorButton>
 	);
 };
