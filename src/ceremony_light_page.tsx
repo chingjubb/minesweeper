@@ -53,13 +53,18 @@ export const CeremonyLightPage = (props: Props) => {
 			});
 	}
 	const loadUsers = () => {
-		fetch('https://maitreya-tw.com/api/get_blessing_recs/1576')
+		fetch('https://maitreya-tw.com/api/get_blessing_recs_by_cellphone/' + state.phoneNumber)
 			.then(res => res.json())
 			.then(json => {
-				const users: User[] = json as User[];
-				console.log('fetch loadUsers!!! got json', users);
-				dispatch({type: ActionTypes.loadUsers, users});
-				setShowSelectUserModal(true);
+				if (json.constructor === Object && Object.keys(json).length === 0) {
+					console.log('no users');
+					return;
+				} else {
+					const users: User[] = json as User[];
+					console.log('fetch loadUsers!!! got json', users);
+					dispatch({type: ActionTypes.loadUsers, users});
+					setShowSelectUserModal(true);
+				}
 			});
 	}
 
