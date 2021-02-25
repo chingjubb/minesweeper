@@ -2,6 +2,8 @@ import { useReducer, Dispatch } from 'react';
 import { produce } from 'immer';
 
 export type LightState = {
+	userName?: string;
+	phoneNumber?: string;
 	allUsers: User[];
 	allLights: Light[];
 	users: Map<string, LightCountMap>; // 法會燈的選擇 For ceremony: user name to a light count map
@@ -64,6 +66,8 @@ export const ActionTypes = {
 	selectYearLights: 'selectYearLights',
 	deleteYearLightAt: 'deleteYearLightAt',
 	setYearLightUsersAt: 'setYearLightUsersAt',
+	setCurrentUserName: 'setCurrentUserName',
+	setPhoneNumber: 'setPhoneNumber',
 } as const;
 
 export type LightAction =
@@ -120,6 +124,14 @@ export type LightAction =
 			type: typeof ActionTypes.setYearLightUsersAt;
 			index: number;
 			userNames: string[];
+	}
+	| {
+			type: typeof ActionTypes.setCurrentUserName;
+			userName: string;
+	}
+	| {
+			type: typeof ActionTypes.setPhoneNumber;
+			phoneNumber: string;
 	};
 
 export const LightReducer = (
@@ -201,6 +213,14 @@ export const LightReducer = (
 		case 'setYearLightUsersAt':
 			return produce(state, (draft) => {
 				draft.yearLights[action.index].userNames = action.userNames;
+			});
+		case 'setCurrentUserName':
+			return produce(state, (draft) => {
+				draft.userName = action.userName;
+			});
+		case 'setPhoneNumber':
+			return produce(state, (draft) => {
+				draft.phoneNumber = action.phoneNumber;
 			});
 		default:
 			return state;

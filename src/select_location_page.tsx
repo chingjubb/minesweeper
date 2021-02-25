@@ -88,7 +88,7 @@ export const SelectLocationPage = (props: Props) => {
 					loadAllLightsForCeremony(selectedCeremony.id);
 				}}
 			/>
-			<GoToHomePage />
+			<GoToHomePage onClick={()=>{ window.location.reload() }}/>
 		</div>
 	);
 };

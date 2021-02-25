@@ -10,6 +10,7 @@ import { SelectUserModal } from './select_user_modal';
 import { CeremonyLightTable } from './ceremony_light_table';
 import { NewUserModal } from './new_user_modal';
 import { SelectLocationPage } from './select_location_page';
+import { NameAndPhoneForm } from './name_and_phone_form';
 
 type Props = {
 
@@ -21,6 +22,8 @@ export const CeremonyLightPage = (props: Props) => {
 									   allLocations: [],
 									   allCeremonies: [],
 									   allLights: [],
+									   userName: '',
+									   phoneNumber: '',
 									  };
 	console.log(props);								 
 	const [state, dispatch] = useLightReducer(initialState);
@@ -61,6 +64,16 @@ export const CeremonyLightPage = (props: Props) => {
 	}
 
 	console.log('state', state);
+
+	if (state.phoneNumber.length === 0 || state.userName.length === 0) {
+		return <NameAndPhoneForm onUserNameChange={(userName: string) => {
+								 	dispatch({type: 'setCurrentUserName', userName });
+								 }}
+								 onPhoneNumberChange={(phoneNumber: string) => {
+								 	dispatch({type: 'setPhoneNumber', phoneNumber });
+								 }}
+			    />
+	}
 
 	if (state.allLocations.length === 0 || state.allCeremonies.length === 0) {
 		return <div style={{margin: 'auto', marginTop:'40%'}}>載入中...</div>

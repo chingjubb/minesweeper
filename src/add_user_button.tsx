@@ -152,3 +152,16 @@ export const EditUserButton = (props: Props) => {
 			>編輯點燈人</Button>
 	);
 };
+
+export const NextStepButton = (props: Props) => {
+	const { onClick, disabled } = props; 
+	return (
+		<ColorButton variant="contained"
+				color="primary"
+				disabled={disabled}
+				onClick={onClick}
+				style={{margin: 5, marginRight: 20, width: 300, marginTop: 20}}
+			>下一步</ColorButton>
+	);
+};
+
