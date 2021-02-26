@@ -101,11 +101,6 @@ export const CeremonyLightPage = (props: Props) => {
 
 	console.log('state', state);
 
-	postData('https://maitreya-tw.com/api/celemony_request_store', { session_data: 1 })
-		.then(data => {
-			console.log('data', data); // JSON data parsed by `data.json()` call
-		});
-
 	// fetch('https://maitreya-tw.com/api/celemony_request_store', {
 	// 	method: 'POST', // or 'PUT'
 	// 	headers: {
@@ -127,7 +122,8 @@ export const CeremonyLightPage = (props: Props) => {
 						 	  checkUser(phoneNumber);
 						  }}
 			   />
-	} else if (state.currentUserStatus === 0 && state.userName.length === 0) {
+	} else if ((state.currentUserStatus === 0 || !state.currentUserStatus)
+				&& state.userName.length === 0) {
 		return <NameForm onUserNameChange={(userName: string) => {
 						 	  dispatch({type: 'setCurrentUserName', userName });
 						  }}
@@ -165,6 +161,27 @@ export const CeremonyLightPage = (props: Props) => {
 		setShowSelectUserModal(false);
 	}
 
+	const getFormData = () => {
+		return { 'session_data': 1,
+				 'price': 1000,
+				 'lighting_num': 1,
+				 'locid': 1,
+				 'contact_name': '',
+				 'contact_phone': '123123',
+				 'check_user': 0,
+				 'check_user_type': 0,
+				 'lighting_locid': 12,
+				 'celemony_code': '1100119' }
+	}
+
+	const onSubmit = () => {
+		console.log('click onSubmit the light table!!');
+		postData('https://maitreya-tw.com/api/celemony_request_store', getFormData())
+		.then(data => {
+			console.log('on submit data', data); // JSON data parsed by `data.json()` call
+		});
+	}
+
 	return (
 		<div style={{ margin: 50, marginLeft: 30}}>
 			{state.allUsers.length > 0 && <SelectUserButton onClick={() => { setShowSelectUserModal(true) }} />}
@@ -190,6 +207,7 @@ export const CeremonyLightPage = (props: Props) => {
 				<CeremonyLightTable users={state.users}
 							allLights={state.allLights}
 							dispatch={dispatch}
+							onSubmit={onSubmit}
 							location={state.location}
 							allUsers={state.allUsers} />
 			</div>

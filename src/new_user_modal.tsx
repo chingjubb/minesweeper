@@ -36,7 +36,7 @@ export const NewUserModal = (props: Props) => {
 	};
 
 	return (
-		<Dialog onClose={onClose}
+		<Dialog onClose={()=>{}}
 				aria-labelledby="simple-dialog-title"
 				open={open}
 				maxWidth="md"

@@ -22,7 +22,7 @@ export const PhoneForm = (props: PhoneProps) => {
 				<div>
 					<TextField
 						style={{ width: 300, margin: 5 }}
-						label={'電話號碼'}
+						label={'請輸入電話號碼'}
 						variant="outlined"
 						required
 						value={phoneNumber}

@@ -43,7 +43,7 @@ export const SelectLightModal = (props: Props) => {
 	}
 
 	return (
-		<Dialog onClose={onCancel}
+		<Dialog onClose={()=>{}}
 				aria-labelledby="simple-dialog-title"
 				open={open}
 				maxWidth="md"

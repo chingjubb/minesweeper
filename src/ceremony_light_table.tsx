@@ -17,10 +17,11 @@ type Props = {
 	dispatch: Dispatch<LightAction>;
 	allLights: Light[];
 	location?: Location;
+	onSubmit: () => void;
 }
 
 export const CeremonyLightTable = (props: Props) => {
-	const { users, allUsers, dispatch, allLights, location } = props;
+	const { users, allUsers, dispatch, allLights, location, onSubmit } = props;
 
 	let total = 0;
 	const userNames = Object.keys(users);
@@ -67,7 +68,7 @@ export const CeremonyLightTable = (props: Props) => {
 			</TableContainer>
 			{total > 0 && <div style={{marginTop: 20}}>總價： {total}元</div>}
 			<div style={{marginTop: 20}}>
-				<SubmitLightButton disabled={total <= 0} />
+				<SubmitLightButton disabled={total <= 0} onClick={onSubmit}/>
 				<GoBackToSelectPage onClick={() => { window.location.reload(); }}/>
 			</div>
 		</div>
