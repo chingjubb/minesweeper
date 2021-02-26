@@ -4,6 +4,8 @@ import { produce } from 'immer';
 export type LightState = {
 	userName?: string;
 	phoneNumber?: string;
+	currentUserStatus?: number;
+	currentUserType?: number;
 	allUsers: User[];
 	allLights: Light[];
 	users: Map<string, LightCountMap>; // 法會燈的選擇 For ceremony: user name to a light count map

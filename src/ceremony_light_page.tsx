@@ -10,7 +10,7 @@ import { SelectUserModal } from './select_user_modal';
 import { CeremonyLightTable } from './ceremony_light_table';
 import { NewUserModal } from './new_user_modal';
 import { SelectLocationPage } from './select_location_page';
-import { NameAndPhoneForm } from './name_and_phone_form';
+import { PhoneForm, NameForm } from './name_and_phone_form';
 
 type Props = {
 
@@ -68,16 +68,30 @@ export const CeremonyLightPage = (props: Props) => {
 			});
 	}
 
+	const checkUser = (phoneNumber) => {
+		fetch('https://maitreya-tw.com/api/check_user/' + phoneNumber)
+			.then(res => res.json())
+			.then(json => {
+				const status = json['status'];
+				const type = json['type'];
+				console.log('status', status);
+				console.log('type', type);
+			});
+	}
+
 	console.log('state', state);
 
-	if (state.phoneNumber.length === 0 || state.userName.length === 0) {
-		return <NameAndPhoneForm onUserNameChange={(userName: string) => {
-								 	dispatch({type: 'setCurrentUserName', userName });
-								 }}
-								 onPhoneNumberChange={(phoneNumber: string) => {
-								 	dispatch({type: 'setPhoneNumber', phoneNumber });
-								 }}
-			    />
+	if (state.phoneNumber.length === 0) {
+		return <PhoneForm onPhoneNumberChange={(phoneNumber: string) => {
+						 	  dispatch({type: 'setPhoneNumber', phoneNumber });
+						 	  checkUser(phoneNumber);
+						  }}
+			   />
+	} else if (state.userName.length === 0) {
+		return <NameForm onUserNameChange={(userName: string) => {
+						 	  dispatch({type: 'setCurrentUserName', userName });
+						  }}
+			   />
 	}
 
 	if (state.allLocations.length === 0 || state.allCeremonies.length === 0) {
