@@ -76,10 +76,50 @@ export const CeremonyLightPage = (props: Props) => {
 				const type = json['type'];
 				console.log('status', status);
 				console.log('type', type);
+				dispatch({type: 'setCurrentUserStatus', currentUserStatus: status });
+				dispatch({type: 'setCurrentUserType', currentUserType: type });
 			});
 	}
 
+	async function postData (url = '', data = {}) {
+		  // Default options are marked with *
+		const response = await fetch(url, {
+			method: 'POST', // *GET, POST, PUT, DELETE, etc.
+			mode: 'cors', // no-cors, *cors, same-origin
+			cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+			credentials: 'same-origin', // include, *same-origin, omit
+			headers: {
+				'Content-Type': 'application/json'
+				// 'Content-Type': 'application/x-www-form-urlencoded',
+			},
+			redirect: 'follow', // manual, *follow, error
+			referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+			body: JSON.stringify(data) // body data type must match "Content-Type" header
+		});
+		return response.json(); // parses JSON response into native JavaScript objects
+	}
+
 	console.log('state', state);
+
+	postData('https://maitreya-tw.com/api/celemony_request_store', { session_data: 1 })
+		.then(data => {
+			console.log('data', data); // JSON data parsed by `data.json()` call
+		});
+
+	// fetch('https://maitreya-tw.com/api/celemony_request_store', {
+	// 	method: 'POST', // or 'PUT'
+	// 	headers: {
+	// 	'Content-Type': 'application/json',
+	// 	},
+	// 	body: JSON.stringify({session_data: 1}),
+	// })
+	// .then(response => response.json())
+	// .then(data => {
+	// 	console.log('Success:', data);
+	// })
+	// .catch((error) => {
+	// 	console.error('Error:', error);
+	// });
 
 	if (state.phoneNumber.length === 0) {
 		return <PhoneForm onPhoneNumberChange={(phoneNumber: string) => {
@@ -87,7 +127,7 @@ export const CeremonyLightPage = (props: Props) => {
 						 	  checkUser(phoneNumber);
 						  }}
 			   />
-	} else if (state.userName.length === 0) {
+	} else if (state.currentUserStatus === 0 && state.userName.length === 0) {
 		return <NameForm onUserNameChange={(userName: string) => {
 						 	  dispatch({type: 'setCurrentUserName', userName });
 						  }}

@@ -70,6 +70,8 @@ export const ActionTypes = {
 	setYearLightUsersAt: 'setYearLightUsersAt',
 	setCurrentUserName: 'setCurrentUserName',
 	setPhoneNumber: 'setPhoneNumber',
+	setCurrentUserStatus: 'setCurrentUserStatus',
+	setCurrentUserType: 'setCurrentUserType',
 } as const;
 
 export type LightAction =
@@ -134,6 +136,14 @@ export type LightAction =
 	| {
 			type: typeof ActionTypes.setPhoneNumber;
 			phoneNumber: string;
+	}
+	| {
+			type: typeof ActionTypes.setCurrentUserStatus; // 0 or 1
+			currentUserStatus: number;
+	}
+	| {
+			type: typeof ActionTypes.setCurrentUserType; // 0 or 1
+			currentUserType: number;
 	};
 
 export const LightReducer = (
@@ -224,6 +234,15 @@ export const LightReducer = (
 			return produce(state, (draft) => {
 				draft.phoneNumber = action.phoneNumber;
 			});
+		case 'setCurrentUserStatus':
+			return produce(state, (draft) => {
+				draft.currentUserStatus = action.currentUserStatus;
+			});
+		case 'setCurrentUserType':
+			return produce(state, (draft) => {
+				draft.currentUserType = action.currentUserType;
+			});
+		
 		default:
 			return state;
 	}
