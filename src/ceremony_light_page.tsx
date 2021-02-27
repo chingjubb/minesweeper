@@ -164,15 +164,18 @@ export const CeremonyLightPage = (props: Props) => {
 
 	const getFormData = () => {
 		console.log('getSessionData', getSessionData());
+		const urlParams = new URLSearchParams(window.location.search);
+		const locid = urlParams.get('locid') ?? 1;
+
 		return { 'session_data': getSessionData(),
 				 'price': getTotalPrice(),
 				 'lighting_num': getTotalNumLight(),
-				 'locid': 1,
+				 'locid': locid,
 				 'contact_name': state.userName,
 				 'contact_phone': state.phoneNumber,
 				 'check_user': state.currentUserStatus,
 				 'check_user_type': state.currentUserType,
-				 'lighting_locid': 12,
+				 'lighting_locid': state.location.id,
 				 'celemony_code': state.ceremony.id }
 	}
 
