@@ -102,21 +102,6 @@ export const CeremonyLightPage = (props: Props) => {
 
 	console.log('state', state);
 
-	// fetch('https://maitreya-tw.com/api/celemony_request_store', {
-	// 	method: 'POST', // or 'PUT'
-	// 	headers: {
-	// 	'Content-Type': 'application/json',
-	// 	},
-	// 	body: JSON.stringify({session_data: 1}),
-	// })
-	// .then(response => response.json())
-	// .then(data => {
-	// 	console.log('Success:', data);
-	// })
-	// .catch((error) => {
-	// 	console.error('Error:', error);
-	// });
-
 	if (state.success) {
 		return <SuccessPage />;
 	}
