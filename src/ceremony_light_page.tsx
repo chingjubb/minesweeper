@@ -5,6 +5,7 @@ import { useLightReducer,
 		 ActionTypes,
 		 LightCountMap,
 		 User,
+		 Light,
 		 Ceremony } from './light_reducer';
 import { SelectUserModal } from './select_user_modal';
 import { CeremonyLightTable } from './ceremony_light_table';
@@ -162,24 +163,103 @@ export const CeremonyLightPage = (props: Props) => {
 	}
 
 	const getFormData = () => {
-		return { 'session_data': 1,
-				 'price': 1000,
-				 'lighting_num': 1,
+		console.log('getSessionData', getSessionData());
+		return { 'session_data': getSessionData(),
+				 'price': getTotalPrice(),
+				 'lighting_num': getTotalNumLight(),
 				 'locid': 1,
-				 'contact_name': '',
-				 'contact_phone': '123123',
-				 'check_user': 0,
-				 'check_user_type': 0,
+				 'contact_name': state.userName,
+				 'contact_phone': state.phoneNumber,
+				 'check_user': state.currentUserStatus,
+				 'check_user_type': state.currentUserType,
 				 'lighting_locid': 12,
-				 'celemony_code': '1100119' }
+				 'celemony_code': state.ceremony.id }
+	}
+
+	const getSessionData = () => {
+		let data: string[] = [];
+		const userNames = Object.keys(state.users);
+		userNames.forEach((userName: string) => {
+			const user = state.allUsers.find((u) => u.name === userName);
+			const lightCountMap: LightCountMap | undefined = state.users[userName];
+			if (lightCountMap && user) {
+				const num = getNumLightForUser(lightCountMap, state.allLights);
+				if (num > 0) {
+					let data1 = `${userName}@${user.birth_cal}@${user.birth_year}@${user.birth_month}@${user.birth_day}@${user.address}@`
+					const countData: string[] = [];
+					state.allLights.forEach((light: Light) => {
+						const count = lightCountMap[light.name] ?? 0;
+						countData.push(`${count}`);
+					});
+					data1 += countData.join('^')
+					data1 += '@'
+
+					const lightIDs: string[] = state.allLights.map((light) => light.id.toString());
+					data1 += lightIDs.join('^');
+					data1 += `@${Date.now()}@${state.ceremony.id}`;
+					data.push(data1);
+				}
+			}
+		});
+		return data.join('|');
 	}
 
 	const onSubmit = () => {
-		console.log('click onSubmit the light table!!');
+		console.log('click onSubmit the light table!!', getFormData());
+		console.log(postData);
 		postData('https://maitreya-tw.com/api/celemony_request_store', getFormData())
 		.then(data => {
 			console.log('on submit data', data); // JSON data parsed by `data.json()` call
 		});
+	}
+
+	const getTotalPrice = () => {
+		let total = 0;
+		const userNames = Object.keys(state.users);
+		userNames.forEach((userName: string) => {
+			const lightCountMap: LightCountMap | undefined = state.users[userName];
+			if (lightCountMap) {
+				const subtotal = getSubTotal(lightCountMap, state.allLights);
+				total += subtotal;
+			}
+		});
+		return total;
+	}
+	const getTotalNumLight = () => {
+		let totalCount = 0;
+		const userNames = Object.keys(state.users);
+		userNames.forEach((userName: string) => {
+			const lightCountMap: LightCountMap | undefined = state.users[userName];
+			if (lightCountMap) {
+				const num = getNumLightForUser(lightCountMap, state.allLights);
+				totalCount += num;
+			}
+		});
+		return totalCount;
+	}
+
+	const getNumLightForUser = (lightCountMap: LightCountMap, allLights: Light[]) => {
+		const lightNames: string[] = Object.keys(lightCountMap);
+		let count = 0;
+		lightNames.forEach((lightName: string) => {
+			const theLight: Light | undefined = allLights.find((light: Light) => light.name === lightName);
+			if (theLight) {
+				count += lightCountMap[lightName] ?? 0;
+			}
+		});
+		return count;
+	}
+	const getSubTotal = (lightCountMap: LightCountMap, allLights: Light[]): number => {
+		const lightNames: string[] = Object.keys(lightCountMap);
+		let subtotal = 0;
+		lightNames.forEach((lightName: string) => {
+			const theLight: Light | undefined = allLights.find((light: Light) => light.name === lightName);
+			if (theLight) {
+				const count = lightCountMap[lightName] ?? 0;
+				subtotal += count * theLight.price;
+			}
+		});
+		return subtotal;
 	}
 
 	return (
