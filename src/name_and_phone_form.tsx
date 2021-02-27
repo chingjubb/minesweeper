@@ -60,6 +60,13 @@ export const NameForm = (props: NameProps) => {
 			</div>);
 };
 
+export const SuccessPage = () => {
+	return (<div style={{ margin: 'auto', width: 400, marginTop: 100, fontSize: 25,fontWeight: 600 }}>
+				<div>
+					燈單建立成功！請前往櫃檯結帳。
+				</div>
+			</div>);
+};
 
 export const NameAndPhoneForm = (props: Props) => {
 	const [userName, setUserName] = useState('');

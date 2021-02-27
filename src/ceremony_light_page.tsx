@@ -11,7 +11,7 @@ import { SelectUserModal } from './select_user_modal';
 import { CeremonyLightTable } from './ceremony_light_table';
 import { NewUserModal } from './new_user_modal';
 import { SelectLocationPage } from './select_location_page';
-import { PhoneForm, NameForm } from './name_and_phone_form';
+import { PhoneForm, NameForm, SuccessPage } from './name_and_phone_form';
 
 type Props = {
 
@@ -117,6 +117,10 @@ export const CeremonyLightPage = (props: Props) => {
 	// 	console.error('Error:', error);
 	// });
 
+	if (state.success) {
+		return <SuccessPage />;
+	}
+
 	if (state.phoneNumber.length === 0) {
 		return <PhoneForm onPhoneNumberChange={(phoneNumber: string) => {
 						 	  dispatch({type: 'setPhoneNumber', phoneNumber });
@@ -212,7 +216,15 @@ export const CeremonyLightPage = (props: Props) => {
 		console.log(postData);
 		postData('https://maitreya-tw.com/api/celemony_request_store', getFormData())
 		.then(data => {
-			console.log('on submit data', data); // JSON data parsed by `data.json()` call
+			console.log('on submit get back data', data); // JSON data parsed by `data.json()` call
+			const successful = data['status'] === 1;
+			if (successful) {
+				console.log("success!!");
+				dispatch({type: 'setSuccess', success: true});
+			} else {
+				console.log("failed!!");
+			}
+
 		});
 	}
 

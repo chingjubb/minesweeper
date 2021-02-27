@@ -14,6 +14,7 @@ export type LightState = {
 	location?: Location; // selected location
 	ceremony?: Ceremony; // selected ceremony
 	yearLights?: YearLight[]; // 年度燈的選擇 For annual light
+	success?: boolean;
 };
 
 export type YearLight = {
@@ -72,6 +73,7 @@ export const ActionTypes = {
 	setPhoneNumber: 'setPhoneNumber',
 	setCurrentUserStatus: 'setCurrentUserStatus',
 	setCurrentUserType: 'setCurrentUserType',
+	setSuccess: 'setSuccess',
 } as const;
 
 export type LightAction =
@@ -144,6 +146,10 @@ export type LightAction =
 	| {
 			type: typeof ActionTypes.setCurrentUserType; // 0 or 1
 			currentUserType: number;
+	}
+	| {
+			type: typeof ActionTypes.setSuccess;
+			success: boolean;
 	};
 
 export const LightReducer = (
@@ -242,7 +248,10 @@ export const LightReducer = (
 			return produce(state, (draft) => {
 				draft.currentUserType = action.currentUserType;
 			});
-		
+		case 'setSuccess':
+			return produce(state, (draft) => {
+				draft.success = action.success;
+			});
 		default:
 			return state;
 	}
