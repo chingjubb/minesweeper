@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import { NextStepButton } from './add_user_button';
+import { NextStepButton, FinishButton } from './add_user_button';
 
 type Props = {
 	onUserNameChange: (userName: string) => void;
@@ -62,8 +62,13 @@ export const NameForm = (props: NameProps) => {
 
 export const SuccessPage = () => {
 	return (<div style={{ margin: 'auto', width: 400, marginTop: 100, fontSize: 25,fontWeight: 600 }}>
-				<div>
+				<div style={{ marginBottom: 100 }}>
 					燈單建立成功！請前往櫃檯結帳。
+				</div>
+				<div style={{ display: 'flex', justifyContent: 'center' }}>
+					<FinishButton onClick={() => {
+									window.location.reload();
+							  }}/>
 				</div>
 			</div>);
 };

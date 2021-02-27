@@ -165,3 +165,13 @@ export const NextStepButton = (props: Props) => {
 	);
 };
 
+export const FinishButton = (props: Props) => {
+	const { onClick } = props;
+	return (
+		<ColorButton variant="contained"
+				color="default"
+				onClick={onClick}
+				style={{marginRight:'20px', width:'180px'}}
+			>結束</ColorButton>
+	);
+};
