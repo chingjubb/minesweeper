@@ -8,7 +8,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { ActionTypes, LightAction, User, Light, Location, YearLight } from './light_reducer';
-import { SubmitLightButton, GoBackToSelectPage, ColorButton } from './add_user_button';
+import { ColorButton } from './add_user_button';
 import { AddAndSelectUserModal } from './add_and_select_user_modal';
 
 type Props = {
@@ -21,7 +21,6 @@ type Props = {
 
 export const YearLightTable = (props: Props) => {
 	const { yearLights, allUsers, allLights, location, dispatch } = props;
-	const total = 0;
 
 	const deleteLightAtIndex = (index: number) => {
 		dispatch({ type: ActionTypes.deleteYearLightAt, index });
@@ -67,11 +66,6 @@ export const YearLightTable = (props: Props) => {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			{total > 0 && <div style={{marginTop: 20}}>總價： {total}元</div>}
-			<div style={{marginTop: 20}}>
-				<SubmitLightButton disabled={total <= 0} />
-				<GoBackToSelectPage />
-			</div>
 		</div>
   );
 };

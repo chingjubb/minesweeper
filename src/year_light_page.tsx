@@ -5,9 +5,11 @@ import { useLightReducer,
 		 ActionTypes,
 		 LightCountMap,
 		 Light,
+		 YearLight,
 		 User } from './light_reducer';
 import { YearLightTable } from './year_light_table';
 import { SelectLightModal } from './select_light_modal';
+import { SubmitLightButton, GoBackToSelectPage } from './add_user_button';
 
 type Props = {
 
@@ -60,12 +62,6 @@ export const YearLightPage = (_props: Props) => {
 
 	console.log('state', state);
 
-	// if (state.allLocations.length > 0 &&
-	// 	!state.location) {
-	// 	return <SelectLocationPage dispatch={dispatch}
-	// 							   allLocations={state.allLocations}
-	// 							   allCeremonies={state.allCeremonies} />;
-	// }
 	const [showModal, setShowModal] = useState(false);
 
 	const onSubmit = (lightCountMap: LightCountMap) => {
@@ -73,6 +69,16 @@ export const YearLightPage = (_props: Props) => {
 		const lightNames: string[] = lightCountMapToLightNames(lightCountMap);
 		dispatch({type: ActionTypes.selectYearLights, lightNames })
 	}
+
+	let totalPrice = 0;
+	let allLightHasName = true;
+	state.yearLights.forEach((yearLight: YearLight) => {
+		const yearLightName = yearLight.lightName;
+		const light: Light = state.allLights.find((light: Light) => light.name === yearLightName);
+		const price = light?.price ?? 0;
+		totalPrice += price;
+		allLightHasName = allLightHasName && (yearLight.userNames.length > 0);
+	});
 
 	return (
 		<div style={{ margin: 50}}>
@@ -89,6 +95,12 @@ export const YearLightPage = (_props: Props) => {
 								location={state.location}
 								allUsers={state.allUsers} />
 			</div>
+			{totalPrice > 0 && <div style={{marginTop: 20}}>總價： {totalPrice}元</div>}
+			{totalPrice > 0 &&
+				<div style={{marginTop: 20, display: 'flex', justifyContent: 'center' }}>
+					<SubmitLightButton disabled={totalPrice <= 0 || !allLightHasName} />
+					<GoBackToSelectPage onClick={() => { window.location.reload(); }}/>
+				</div>}
 		</div>
 	);
 };

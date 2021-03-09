@@ -136,7 +136,7 @@ export type LightAction =
 			userName: string;
 	}
 	| {
-			type: typeof ActionTypes.setPhoneNumber;
+			type: typeof ActionTypes.setPhoneNumber; // current user's phone number
 			phoneNumber: string;
 	}
 	| {
