@@ -9,7 +9,8 @@ import { useLightReducer,
 		 User } from './light_reducer';
 import { YearLightTable } from './year_light_table';
 import { SelectLightModal } from './select_light_modal';
-import { SubmitLightButton, GoBackToSelectPage } from './add_user_button';
+import { SubmitLightButton, GoToHomePage } from './add_user_button';
+import { SelectYearLightLocationPage } from './select_year_light_location_page';
 
 type Props = {
 
@@ -80,15 +81,27 @@ export const YearLightPage = (_props: Props) => {
 		allLightHasName = allLightHasName && (yearLight.userNames.length > 0);
 	});
 
+	if (!state.location && state.allLocations.length === 0) {
+		return <div style={{marginTop:'20%', textAlign:'center'}}>載入中...</div>
+	}
+
+	if (!state.location && state.allLocations.length > 0) {
+		return <SelectYearLightLocationPage allLocations={state.allLocations}
+											dispatch={dispatch} />
+	}
+
 	return (
 		<div style={{ margin: 50}}>
+			<div style={{ fontSize: '20px', textAlign: 'center' }}>
+				{state.location.name}
+			</div>
 			<AddYearLightButton onClick={() => { setShowModal(true) }} />
 			{showModal && <SelectLightModal onClose={()=>{ setShowModal(false)}}
 											allLights={state.allLights}
 											open={showModal}
 											onSubmit={onSubmit}
 											lightCountMap={{} as  LightCountMap} />}
-			<div style={{marginTop:'20px'}}>
+			<div style={{ marginTop: '20px' }}>
 				<YearLightTable allLights={state.allLights}
 								dispatch={dispatch}
 								yearLights={state.yearLights}
@@ -99,7 +112,7 @@ export const YearLightPage = (_props: Props) => {
 			{totalPrice > 0 &&
 				<div style={{marginTop: 20, display: 'flex', justifyContent: 'center' }}>
 					<SubmitLightButton disabled={totalPrice <= 0 || !allLightHasName} />
-					<GoBackToSelectPage onClick={() => { window.location.reload(); }}/>
+					<GoToHomePage onClick={()=>{ window.location.reload() }}/>
 				</div>}
 		</div>
 	);

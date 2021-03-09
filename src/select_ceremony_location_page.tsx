@@ -11,7 +11,7 @@ type Props = {
 	dispatch: Dispatch<LightAction>;
 };
 
-export const SelectLocationPage = (props: Props) => {
+export const SelectCeremonyLocationPage = (props: Props) => {
 	const { allLocations, allCeremonies, dispatch } = props;
 	const [selectedLocation, setSelectedLocation] =
 		useState<Location>(allLocations.length > 0 ? allLocations[0] : undefined);

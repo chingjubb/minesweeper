@@ -24,7 +24,7 @@ export type YearLight = {
 
 export type Location = { // 地點，例如：台北 陀彌天山 紫竹林寺
 	id: number; // id from the backend
-	name: string;
+	name: string; // 例如：台北 陀彌天山 紫竹林寺
 }
 
 export type Ceremony = { // 法會，例如：南無 彌勒尊佛 佛誕日

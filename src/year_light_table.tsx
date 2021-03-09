@@ -108,7 +108,6 @@ const Row = (props: RowProps) => {
 					})}
 				</TableCell>
 				<TableCell>{location?.name}</TableCell>
-				<TableCell>
-				</TableCell>
+				<TableCell></TableCell>
 			</TableRow>
 };

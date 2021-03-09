@@ -10,7 +10,7 @@ import { useLightReducer,
 import { SelectUserModal } from './select_user_modal';
 import { CeremonyLightTable } from './ceremony_light_table';
 import { NewUserModal } from './new_user_modal';
-import { SelectLocationPage } from './select_location_page';
+import { SelectCeremonyLocationPage } from './select_ceremony_location_page';
 import { PhoneForm, NameForm, SuccessPage } from './name_and_phone_form';
 
 type Props = {
@@ -128,9 +128,9 @@ export const CeremonyLightPage = (props: Props) => {
 		state.allCeremonies.length > 0 &&
 		!state.ceremony &&
 		!state.location) {
-		return <SelectLocationPage dispatch={dispatch}
-								   allLocations={state.allLocations}
-								   allCeremonies={state.allCeremonies} />;
+		return <SelectCeremonyLocationPage dispatch={dispatch}
+								  		   allLocations={state.allLocations}
+								  		   allCeremonies={state.allCeremonies} />;
 	}
 
 	const onSubmitSelectUserModal = (newSelectedNames: string[]) => {
