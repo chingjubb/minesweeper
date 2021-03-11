@@ -119,6 +119,30 @@ export const SubmitLightButton = (props: Props) => {
 	);
 };
 
+export const SubmitLightToCounterButton = (props: Props) => {
+	const { onClick, disabled } = props; 
+	return (
+		<ColorButton variant="contained"
+				color="primary"
+				disabled={disabled}
+				onClick={onClick}
+				style={{marginRight:'20px', width:'150px'}}
+			>櫃檯結帳</ColorButton>
+	);
+};
+
+export const SubmitLightPayOnlineButton = (props: Props) => {
+	const { onClick, disabled } = props; 
+	return (
+		<ColorButton variant="contained"
+				color="primary"
+				disabled={disabled}
+				onClick={onClick}
+				style={{marginRight:'20px', width:'150px'}}
+			>線上刷卡</ColorButton>
+	);
+};
+
 export const GoBackToSelectPage = (props: Props) => {
 	const { onClick } = props;
 	return (

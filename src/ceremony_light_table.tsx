@@ -9,7 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { ActionTypes, LightAction, User, Light, LightCountMap, Location } from './light_reducer';
 import { SelectLightModal } from './select_light_modal';
-import { SubmitLightButton, GoBackToSelectPage, ColorButton } from './add_user_button';
+import { SubmitLightToCounterButton, SubmitLightPayOnlineButton, GoToHomePage, ColorButton } from './add_user_button';
 
 type Props = {
 	allUsers: User[];
@@ -68,8 +68,9 @@ export const CeremonyLightTable = (props: Props) => {
 			</TableContainer>
 			{total > 0 && <div style={{marginTop: 20}}>總價： {total}元</div>}
 			<div style={{marginTop: 20}}>
-				<SubmitLightButton disabled={total <= 0} onClick={onSubmit}/>
-				<GoBackToSelectPage onClick={() => { window.location.reload(); }}/>
+				<SubmitLightToCounterButton disabled={total <= 0} onClick={onSubmit}/>
+				<SubmitLightPayOnlineButton disabled={total <= 0} onClick={()=>{}}/>
+				<GoToHomePage onClick={() => { window.location.reload(); }}/>
 			</div>
 		</div>
   );

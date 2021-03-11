@@ -60,10 +60,11 @@ export const NameForm = (props: NameProps) => {
 			</div>);
 };
 
-export const SuccessPage = () => {
+export const SuccessPage = ({ confirmationNumber }: { confirmationNumber: string }) => {
 	return (<div style={{ margin: 'auto', width: 400, marginTop: 100, fontSize: 25,fontWeight: 600 }}>
 				<div style={{ marginBottom: 100 }}>
 					燈單建立成功！請前往櫃檯結帳。
+					序號：{confirmationNumber}
 				</div>
 				<div style={{ display: 'flex', justifyContent: 'center' }}>
 					<FinishButton onClick={() => {

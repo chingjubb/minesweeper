@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { AddUserButton, LoadUserButton, SelectUserButton } from './add_user_button';
+import { AddUserButton, SelectUserButton } from './add_user_button';
 import { useLightReducer,
 		 LightState,
 		 ActionTypes,
@@ -53,8 +53,10 @@ export const CeremonyLightPage = (props: Props) => {
 				dispatch({type: ActionTypes.loadAllCeremonies, allCeremonies});
 			});
 	}
-	const loadUsers = () => {
-		fetch('https://maitreya-tw.com/api/get_blessing_recs_by_cellphone/' + state.phoneNumber)
+
+	// 載入點燈人紀錄
+	const loadUserList = (phoneNumber) => {
+		fetch('https://maitreya-tw.com/api/get_blessing_recs_by_cellphone/' + phoneNumber)
 			.then(res => res.json())
 			.then(json => {
 				if (json.constructor === Object && Object.keys(json).length === 0) {
@@ -64,7 +66,6 @@ export const CeremonyLightPage = (props: Props) => {
 					const users: User[] = json as User[];
 					console.log('fetch loadUsers!!! got json', users);
 					dispatch({type: ActionTypes.loadUsers, users});
-					setShowSelectUserModal(true);
 				}
 			});
 	}
@@ -77,8 +78,17 @@ export const CeremonyLightPage = (props: Props) => {
 				const type = json['type'];
 				console.log('status', status);
 				console.log('type', type);
+				const userName = json['name'];
+				const count = json['count'] ?? 0;
+				console.log('count', count);
+				if (userName && userName.length > 0) {
+					dispatch({type: 'setCurrentUserName', userName });
+				}
 				dispatch({type: 'setCurrentUserStatus', currentUserStatus: status });
 				dispatch({type: 'setCurrentUserType', currentUserType: type });
+				if (count > 0) {
+					loadUserList(phoneNumber); // 載入點燈人紀錄
+				}
 			});
 	}
 
@@ -103,7 +113,7 @@ export const CeremonyLightPage = (props: Props) => {
 	console.log('state', state);
 
 	if (state.success) {
-		return <SuccessPage />;
+		return <SuccessPage confirmationNumber={state.confirmationNumber} />;
 	}
 
 	if (state.phoneNumber.length === 0) {
@@ -113,7 +123,7 @@ export const CeremonyLightPage = (props: Props) => {
 						  }}
 			   />
 	} else if ((state.currentUserStatus === 0 || !state.currentUserStatus)
-				&& state.userName.length === 0) {
+				&& state.userName?.length === 0) {
 		return <NameForm onUserNameChange={(userName: string) => {
 						 	  dispatch({type: 'setCurrentUserName', userName });
 						  }}
@@ -185,7 +195,6 @@ export const CeremonyLightPage = (props: Props) => {
 					});
 					data1 += countData.join('^')
 					data1 += '@'
-
 					const lightIDs: string[] = state.allLights.map((light) => light.id.toString());
 					data1 += lightIDs.join('^');
 					data1 += `@${Date.now()}@${state.ceremony.id}`;
@@ -202,10 +211,11 @@ export const CeremonyLightPage = (props: Props) => {
 		postData('https://maitreya-tw.com/api/celemony_request_store', getFormData())
 		.then(data => {
 			console.log('on submit get back data', data); // JSON data parsed by `data.json()` call
-			const successful = data['status'] === 1;
-			if (successful) {
-				console.log("success!!");
-				dispatch({type: 'setSuccess', success: true});
+			const successful: boolean = data['status'] === 1;
+			const confirmationNumber: string = data['result'];
+			if (successful && confirmationNumber) {
+				console.log("success!! confirmationNumber=", confirmationNumber);
+				dispatch({type: 'setSuccess', success: true, confirmationNumber });
 			} else {
 				console.log("failed!!");
 			}
@@ -264,10 +274,9 @@ export const CeremonyLightPage = (props: Props) => {
 
 	return (
 		<div style={{ margin: 50, marginLeft: 30}}>
+			{state.userName && <div style={{fontSize: 20, marginBottom: 20}}>聯絡人：{state.userName}大德</div>}
 			{state.allUsers.length > 0 && <SelectUserButton onClick={() => { setShowSelectUserModal(true) }} />}
 			<AddUserButton onClick={() => { setShowNewUserModal(true) }} />
-
-			<LoadUserButton onClick={loadUsers} />
 
 			<NewUserModal dispatch={dispatch}
 						  key={'NewUserModal' + state.allUsers.length}
