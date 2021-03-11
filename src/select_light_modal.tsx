@@ -12,6 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import { Light, LightCountMap } from './light_reducer';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import Checkbox from '@material-ui/core/Checkbox';
 
 type Props = {
 	onClose: () => void;
@@ -42,6 +43,16 @@ export const SelectLightModal = (props: Props) => {
 		onClose();
 	}
 
+	const [check, setCheck] = useState(false);
+
+	const setOneForEachLight = () => {
+		const newLightCountMapState: LightCountMap = {} as LightCountMap;
+		allLights.forEach((light: Light) => {
+			newLightCountMapState[light.name] = 1;
+		});
+		setLightCountMapState(newLightCountMapState);
+	} 
+
 	return (
 		<Dialog onClose={()=>{}}
 				aria-labelledby="simple-dialog-title"
@@ -49,6 +60,21 @@ export const SelectLightModal = (props: Props) => {
 				maxWidth="md"
 				fullWidth={false}>
 			<div style={{ height: 600, width: '800px', margin: 20 }}>
+				
+				<div>
+					<Checkbox
+						checked={check}
+						onChange={() => {
+							if (!check) {
+								setOneForEachLight();
+							}
+							setCheck(!check);
+						}}
+						color="default"
+					/>
+					每燈陣各1燈
+				</div>
+				
 				<TableContainer component={Paper} style={{marginBottom: 20}}>
 					<Table aria-label="simple table">
 						<TableHead>
