@@ -15,10 +15,16 @@ type NameProps = {
 	onUserNameChange: (userName: string) => void;
 };
 
+export const LogoTitle = () => {
+	return <div style={{ fontSize: 20, margin: 'auto', marginBottom: 20 }}>線上點燈系統</div>
+
+}
+
 export const PhoneForm = (props: PhoneProps) => {
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const { onPhoneNumberChange } = props;
-	return (<div style={{ margin: 'auto', width: 400, marginTop: 100}}>
+	return (<div style={{ margin: 'auto', width: 400, marginTop: 80}}>
+				<LogoTitle />
 				<div>
 					<TextField
 						style={{ width: 300, margin: 5 }}
@@ -40,7 +46,8 @@ export const PhoneForm = (props: PhoneProps) => {
 export const NameForm = (props: NameProps) => {
 	const [userName, setUserName] = useState('');
 	const { onUserNameChange } = props;
-	return (<div style={{ margin: 'auto', width: 400, marginTop: 100}}>
+	return (<div style={{ margin: 'auto', width: 400, marginTop: 80}}>
+				<LogoTitle />
 				<div>
 					<TextField
 						required

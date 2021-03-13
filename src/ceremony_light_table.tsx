@@ -17,11 +17,18 @@ type Props = {
 	dispatch: Dispatch<LightAction>;
 	allLights: Light[];
 	location?: Location;
-	onSubmit: () => void;
+	onSubmitPayAtCounter: () => void;
+	onSubmitPayOnline: () => void;
 }
 
 export const CeremonyLightTable = (props: Props) => {
-	const { users, allUsers, dispatch, allLights, location, onSubmit } = props;
+	const { users,
+			allUsers,
+			dispatch,
+			allLights,
+			location,
+			onSubmitPayAtCounter,
+			onSubmitPayOnline } = props;
 
 	let total = 0;
 	const userNames = Object.keys(users);
@@ -68,8 +75,8 @@ export const CeremonyLightTable = (props: Props) => {
 			</TableContainer>
 			{total > 0 && <div style={{marginTop: 20}}>總價： {total}元</div>}
 			<div style={{marginTop: 20}}>
-				<SubmitLightToCounterButton disabled={total <= 0} onClick={onSubmit}/>
-				<SubmitLightPayOnlineButton disabled={total <= 0} onClick={()=>{}}/>
+				<SubmitLightToCounterButton disabled={total <= 0} onClick={onSubmitPayAtCounter} />
+				<SubmitLightPayOnlineButton disabled={total <= 0} onClick={onSubmitPayOnline} />
 				<GoToHomePage onClick={() => { window.location.reload(); }}/>
 			</div>
 		</div>

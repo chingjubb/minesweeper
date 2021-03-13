@@ -161,7 +161,7 @@ export const CeremonyLightPage = (props: Props) => {
 		setShowSelectUserModal(false);
 	}
 
-	const getFormData = () => {
+	const getFormData = (payType: number) => { // 0: 櫃檯結帳, 1: 線上付款
 		console.log('getSessionData', getSessionData());
 		const urlParams = new URLSearchParams(window.location.search);
 		const locid = urlParams.get('locid') ?? 1;
@@ -175,7 +175,12 @@ export const CeremonyLightPage = (props: Props) => {
 				 'check_user': state.currentUserStatus,
 				 'check_user_type': state.currentUserType,
 				 'lighting_locid': state.location.id,
-				 'celemony_code': state.ceremony.id }
+				 'celemony_code': state.ceremony.id,
+				 'L108': 0, // 108燈
+				 'Lking': 0, // 燈王
+				 'family': 0, // 是否顯示闔家
+				 'pay_type': payType, // 0: 櫃檯結帳, 1: 線上付款
+				};
 	}
 
 	const getSessionData = () => {
@@ -205,21 +210,25 @@ export const CeremonyLightPage = (props: Props) => {
 		return data.join('|');
 	}
 
-	const onSubmit = () => {
-		console.log('click onSubmit the light table!!', getFormData());
+	const onSubmit = (payType: number) => {
+		console.log('click onSubmit the light table!!', getFormData(payType));
 		console.log(postData);
-		postData('https://maitreya-tw.com/api/celemony_request_store', getFormData())
+		postData('https://maitreya-tw.com/api/celemony_request_store', getFormData(payType))
 		.then(data => {
 			console.log('on submit get back data', data); // JSON data parsed by `data.json()` call
 			const successful: boolean = data['status'] === 1;
 			const confirmationNumber: string = data['result'];
-			if (successful && confirmationNumber) {
+			const onlinePayUrl: string = data['online_pay_url'] ?? '';
+			console.log('onlinePayUrl', onlinePayUrl);
+			if (successful && onlinePayUrl) {
+				// window.location.href = onlinePayUrl;
+				console.log('onlinePayUrl', onlinePayUrl);
+			} else if (successful && confirmationNumber) {
 				console.log("success!! confirmationNumber=", confirmationNumber);
 				dispatch({type: 'setSuccess', success: true, confirmationNumber });
 			} else {
 				console.log("failed!!");
 			}
-
 		});
 	}
 
@@ -296,7 +305,8 @@ export const CeremonyLightPage = (props: Props) => {
 				<CeremonyLightTable users={state.users}
 							allLights={state.allLights}
 							dispatch={dispatch}
-							onSubmit={onSubmit}
+							onSubmitPayAtCounter={() => onSubmit(0)}
+							onSubmitPayOnline={() => onSubmit(1)}
 							location={state.location}
 							allUsers={state.allUsers} />
 			</div>
