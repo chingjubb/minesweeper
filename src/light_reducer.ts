@@ -17,6 +17,9 @@ export type LightState = {
 	success?: boolean;
 	confirmationNumber?: string; // This is after successful submission
 	onlinePayUrl?: string; // This is after successful submission
+	L108?: boolean; // 法會燈 全體108燈
+	Lking?: boolean; // 法會燈 全體燈王
+	family?: boolean; // 法會燈 全體加上闔家 （全體燈王或是108燈才有）
 };
 
 export type YearLight = {
@@ -76,6 +79,10 @@ export const ActionTypes = {
 	setCurrentUserStatus: 'setCurrentUserStatus',
 	setCurrentUserType: 'setCurrentUserType',
 	setSuccess: 'setSuccess',
+	// For Ceremony light:
+	setL108: 'setL108',
+	setLking: 'setLking',
+	setFamily: 'setFamily',
 } as const;
 
 export type LightAction =
@@ -154,6 +161,18 @@ export type LightAction =
 			success: boolean;
 			confirmationNumber: string;
 			onlinePayUrl: string;
+	}
+	| {
+			type: typeof ActionTypes.setL108;
+			L108: boolean;
+	}
+	| {
+			type: typeof ActionTypes.setLking;
+			Lking: boolean;
+	}
+	| {
+			type: typeof ActionTypes.setFamily;
+			family: boolean;
 	};
 
 export const LightReducer = (
@@ -257,6 +276,30 @@ export const LightReducer = (
 				draft.success = action.success;
 				draft.confirmationNumber = action.confirmationNumber;
 				draft.onlinePayUrl = action.onlinePayUrl;
+			});
+		case 'setL108':
+			return produce(state, (draft) => {
+				draft.L108 = action.L108;
+				if (action.L108) {
+					draft.Lking = false;
+				}
+				if (!action.L108 && !draft.Lking) {
+					draft.family = false;
+				}
+			});
+		case 'setLking':
+			return produce(state, (draft) => {
+				draft.Lking = action.Lking;
+				if (action.Lking) {
+					draft.L108 = false;
+				}
+				if (!draft.Lking && !action.Lking) {
+					draft.family = false;
+				}
+			});
+		case 'setFamily':
+			return produce(state, (draft) => {
+				draft.family = action.family;
 			});
 		default:
 			return state;

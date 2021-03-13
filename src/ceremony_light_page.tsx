@@ -313,6 +313,9 @@ export const CeremonyLightPage = (props: Props) => {
 				<CeremonyLightTable users={state.users}
 							allLights={state.allLights}
 							dispatch={dispatch}
+							L108={!!state.L108}
+							Lking={!!state.Lking}
+							family={!!state.family}
 							onSubmitPayAtCounter={() => onSubmit(0)}
 							onSubmitPayOnline={() => onSubmit(1)}
 							location={state.location}

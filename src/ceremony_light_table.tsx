@@ -10,6 +10,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { ActionTypes, LightAction, User, Light, LightCountMap, Location } from './light_reducer';
 import { SelectLightModal } from './select_light_modal';
 import { SubmitLightToCounterButton, SubmitLightPayOnlineButton, GoToHomePage, ColorButton } from './add_user_button';
+import Checkbox from '@material-ui/core/Checkbox';
 
 type Props = {
 	allUsers: User[];
@@ -19,6 +20,9 @@ type Props = {
 	location?: Location;
 	onSubmitPayAtCounter: () => void;
 	onSubmitPayOnline: () => void;
+	L108: boolean;
+	Lking: boolean;
+	family: boolean;
 }
 
 export const CeremonyLightTable = (props: Props) => {
@@ -28,7 +32,8 @@ export const CeremonyLightTable = (props: Props) => {
 			allLights,
 			location,
 			onSubmitPayAtCounter,
-			onSubmitPayOnline } = props;
+			onSubmitPayOnline,
+			L108, Lking, family } = props;
 
 	let total = 0;
 	const userNames = Object.keys(users);
@@ -39,9 +44,38 @@ export const CeremonyLightTable = (props: Props) => {
 			total += subtotal;
 		}
 	});
-
+	const showFamilyCheckbox = L108 || Lking;
 	return (
 		<div style={{ width: 1100 }}>
+			<div style={{ textAlign: 'right' }}>
+				<Checkbox
+					checked={L108}
+					onChange={() => {
+						dispatch({ type: 'setL108', L108: !L108 });
+					}}
+					color="default"
+				/>
+				全體點108燈
+				<Checkbox
+					checked={Lking}
+					onChange={() => {
+						dispatch({ type: 'setLking', Lking: !Lking });
+					}}
+					color="default"
+				/>
+				全體點燈王
+				<span style={{ opacity: showFamilyCheckbox ? 100 : 0 }}>
+					<Checkbox
+						checked={family}
+						onChange={() => {
+							dispatch({ type: 'setFamily', family: !family });
+						}}
+						color="default"
+						disabled={!showFamilyCheckbox}
+					/>
+					顯示闔府
+				</span>
+			</div>
 			<TableContainer component={Paper} style={{ width: 1100 }}>
 				<Table aria-label="simple table">
 					<TableHead>
