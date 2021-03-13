@@ -11,7 +11,10 @@ import { SelectUserModal } from './select_user_modal';
 import { CeremonyLightTable } from './ceremony_light_table';
 import { NewUserModal } from './new_user_modal';
 import { SelectCeremonyLocationPage } from './select_ceremony_location_page';
-import { PhoneForm, NameForm, SuccessPage } from './name_and_phone_form';
+import { PhoneForm,
+		 NameForm,
+		 SuccessPagePayAtCounter,
+		 SuccessPagePayOnline } from './name_and_phone_form';
 
 type Props = {
 
@@ -112,8 +115,13 @@ export const CeremonyLightPage = (props: Props) => {
 
 	console.log('state', state);
 
+	if (state.success && state.onlinePayUrl?.length > 0) {
+		return <SuccessPagePayOnline confirmationNumber={state.confirmationNumber}
+									 onlinePayUrl={state.onlinePayUrl} />;
+	}
+
 	if (state.success) {
-		return <SuccessPage confirmationNumber={state.confirmationNumber} />;
+		return <SuccessPagePayAtCounter confirmationNumber={state.confirmationNumber} />;
 	}
 
 	if (state.phoneNumber.length === 0) {
@@ -217,15 +225,15 @@ export const CeremonyLightPage = (props: Props) => {
 		.then(data => {
 			console.log('on submit get back data', data); // JSON data parsed by `data.json()` call
 			const successful: boolean = data['status'] === 1;
-			const confirmationNumber: string = data['result'];
+			const confirmationNumber: string = data['result'] ?? '';
 			const onlinePayUrl: string = data['online_pay_url'] ?? '';
 			console.log('onlinePayUrl', onlinePayUrl);
-			if (successful && onlinePayUrl) {
-				// window.location.href = onlinePayUrl;
-				console.log('onlinePayUrl', onlinePayUrl);
-			} else if (successful && confirmationNumber) {
+			if (successful) {
 				console.log("success!! confirmationNumber=", confirmationNumber);
-				dispatch({type: 'setSuccess', success: true, confirmationNumber });
+				dispatch({type: 'setSuccess',
+						  success: true,
+						  confirmationNumber,
+						  onlinePayUrl });
 			} else {
 				console.log("failed!!");
 			}

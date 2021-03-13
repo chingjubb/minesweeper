@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import { NextStepButton, FinishButton } from './add_user_button';
+import QRCode from "react-qr-code";
 
 type Props = {
 	onUserNameChange: (userName: string) => void;
@@ -16,7 +17,9 @@ type NameProps = {
 };
 
 export const LogoTitle = () => {
-	return <div style={{ fontSize: 20, margin: 'auto', marginBottom: 20 }}>線上點燈系統</div>
+	return (<div style={{ fontSize: 20, margin: 'auto', marginBottom: 20 }}>
+				線上點燈系統
+			</div>)
 
 }
 
@@ -67,7 +70,7 @@ export const NameForm = (props: NameProps) => {
 			</div>);
 };
 
-export const SuccessPage = ({ confirmationNumber }: { confirmationNumber: string }) => {
+export const SuccessPagePayAtCounter = ({ confirmationNumber }: { confirmationNumber: string }) => {
 	return (<div style={{ margin: 'auto', width: 400, marginTop: 100, fontSize: 25,fontWeight: 600 }}>
 				<div style={{ marginBottom: 100 }}>
 					燈單建立成功！請前往櫃檯結帳。
@@ -78,6 +81,18 @@ export const SuccessPage = ({ confirmationNumber }: { confirmationNumber: string
 									window.location.reload();
 							  }}/>
 				</div>
+			</div>);
+};
+
+export const SuccessPagePayOnline = ({ confirmationNumber, onlinePayUrl }:
+	{ confirmationNumber: string; onlinePayUrl: string; }) => {
+	return (<div style={{ margin: 'auto', width: 500, marginTop: 100, }}>
+				<div style={{ marginBottom: 20, fontSize: 20,fontWeight: 600 }}>
+					燈單建立成功！ 序號：{confirmationNumber}
+				</div>
+				<div>直接前往：<a href={onlinePayUrl}>{onlinePayUrl}</a></div>
+				<div>或掃描QR CODE：</div>
+				<div style={{marginTop: 20}}><QRCode value={onlinePayUrl} /></div>
 			</div>);
 };
 

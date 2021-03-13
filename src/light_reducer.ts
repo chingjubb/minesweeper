@@ -16,6 +16,7 @@ export type LightState = {
 	yearLights?: YearLight[]; // 年度燈的選擇 For annual light
 	success?: boolean;
 	confirmationNumber?: string; // This is after successful submission
+	onlinePayUrl?: string; // This is after successful submission
 };
 
 export type YearLight = {
@@ -152,6 +153,7 @@ export type LightAction =
 			type: typeof ActionTypes.setSuccess;
 			success: boolean;
 			confirmationNumber: string;
+			onlinePayUrl: string;
 	};
 
 export const LightReducer = (
@@ -254,6 +256,7 @@ export const LightReducer = (
 			return produce(state, (draft) => {
 				draft.success = action.success;
 				draft.confirmationNumber = action.confirmationNumber;
+				draft.onlinePayUrl = action.onlinePayUrl;
 			});
 		default:
 			return state;
