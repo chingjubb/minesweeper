@@ -45,6 +45,11 @@ export const CeremonyLightTable = (props: Props) => {
 		}
 	});
 	const showFamilyCheckbox = L108 || Lking;
+	if (L108) {
+		total = 200 * 108;
+	} else if (Lking) {
+		total = 200 * 108 * 12;
+	}
 	return (
 		<div style={{ width: 1100 }}>
 			<div style={{ textAlign: 'right' }}>

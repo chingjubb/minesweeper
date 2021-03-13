@@ -184,9 +184,9 @@ export const CeremonyLightPage = (props: Props) => {
 				 'check_user_type': state.currentUserType,
 				 'lighting_locid': state.location.id,
 				 'celemony_code': state.ceremony.id,
-				 'L108': 0, // 108燈
-				 'Lking': 0, // 燈王
-				 'family': 0, // 是否顯示闔家
+				 'L108': state.L108 ? 1 : 0, // 108燈
+				 'Lking': state.Lking ? 1: 0, // 燈王
+				 'family': state.family ? 1: 0, // 是否顯示闔家
 				 'pay_type': payType, // 0: 櫃檯結帳, 1: 線上付款
 				};
 	}
@@ -250,6 +250,11 @@ export const CeremonyLightPage = (props: Props) => {
 				total += subtotal;
 			}
 		});
+		if (state.L108) {
+			total = 200 * 108;
+		} else if (state.Lking) {
+			total = 200 * 108 * 12;
+		}
 		return total;
 	}
 	const getTotalNumLight = () => {
