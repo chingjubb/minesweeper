@@ -116,6 +116,7 @@ const Row = (props: RowProps) => {
 				<SelectLightModal open={showModal}
 								  lightCountMap={lightCountMap}
 								  onSubmit={onSubmit}
+								  showCheckBox
 								  onClose={() => { setShowModal(false) }}
 								  allLights={allLights} />
 				<TableCell>

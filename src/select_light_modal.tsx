@@ -20,10 +20,11 @@ type Props = {
 	allLights: Light[];
 	lightCountMap: LightCountMap;
 	onSubmit: (lightCountMap: LightCountMap) => void;
+	showCheckBox: boolean;
 }
 
 export const SelectLightModal = (props: Props) => {
-	const { onClose, open, allLights, lightCountMap, onSubmit } = props;
+	const { onClose, open, allLights, lightCountMap, onSubmit, showCheckBox } = props;
 	const [lightCountMapState, setLightCountMapState] = useState<LightCountMap>(lightCountMap);
 
 	const updateCountMap = (lightName: string, count: number) => {
@@ -43,7 +44,20 @@ export const SelectLightModal = (props: Props) => {
 		onClose();
 	}
 
-	const [check, setCheck] = useState(false);
+	const isOneForEachLight = (): boolean => {
+		// Does user select 1 for each light?
+		let returnValue = true;
+		const lightNames = Object.keys(lightCountMapState);
+		if (lightNames.length !== allLights.length) {
+			returnValue = false;
+		}
+		lightNames.forEach((lightName: string) => {
+			if (lightCountMapState[lightName] !== 1) {
+				returnValue = false;
+			}
+		})
+		return returnValue;
+	}
 
 	const setOneForEachLight = () => {
 		const newLightCountMapState: LightCountMap = {} as LightCountMap;
@@ -51,7 +65,9 @@ export const SelectLightModal = (props: Props) => {
 			newLightCountMapState[light.name] = 1;
 		});
 		setLightCountMapState(newLightCountMapState);
-	} 
+	}
+
+	const checked = isOneForEachLight();
 
 	return (
 		<Dialog onClose={()=>{}}
@@ -60,21 +76,19 @@ export const SelectLightModal = (props: Props) => {
 				maxWidth="md"
 				fullWidth={false}>
 			<div style={{ height: 600, width: '800px', margin: 20 }}>
-				
-				<div>
-					<Checkbox
-						checked={check}
-						onChange={() => {
-							if (!check) {
-								setOneForEachLight();
-							}
-							setCheck(!check);
-						}}
-						color="default"
-					/>
-					每燈陣各1燈
-				</div>
-				
+				{showCheckBox &&
+					<div>
+						<Checkbox
+							checked={checked}
+							onChange={() => {
+								if (!checked) {
+									setOneForEachLight();
+								}
+							}}
+							color="default"
+						/>
+						每燈陣各1燈
+					</div>}
 				<TableContainer component={Paper} style={{marginBottom: 20}}>
 					<Table aria-label="simple table">
 						<TableHead>
@@ -124,7 +138,6 @@ const LightRow = (props: LightRowProps) => {
 						label={''}
 						value={count} variant='outlined'
 						onChange={(e) => {
-							console.log('e.target.value', e.target.value);
 							const number = parseInt(e.target.value);
 							if (isNaN(number) || number < 0) {
 								onChange(0);

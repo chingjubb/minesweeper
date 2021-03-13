@@ -99,6 +99,7 @@ export const YearLightPage = (_props: Props) => {
 			{showModal && <SelectLightModal onClose={()=>{ setShowModal(false)}}
 											allLights={state.allLights}
 											open={showModal}
+											showCheckBox={false}
 											onSubmit={onSubmit}
 											lightCountMap={{} as  LightCountMap} />}
 			<div style={{ marginTop: '20px' }}>
