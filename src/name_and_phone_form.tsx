@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import { NextStepButton, FinishButton } from './add_user_button';
 import QRCode from "react-qr-code";
+import logo from './logo.png';
+
 
 type Props = {
 	onUserNameChange: (userName: string) => void;
@@ -17,8 +19,9 @@ type NameProps = {
 };
 
 export const LogoTitle = () => {
-	return (<div style={{ fontSize: 20, margin: 'auto', marginBottom: 20 }}>
-				線上點燈系統
+	return (<div style={{ fontSize: 20, marginBottom: 20, textAlign:'center', width: 300 }}>
+				<div><img src={logo} alt='logl' style={{ width: 100 }}/></div>
+				<div>線上點燈系統</div>
 			</div>)
 
 }
@@ -26,7 +29,7 @@ export const LogoTitle = () => {
 export const PhoneForm = (props: PhoneProps) => {
 	const [phoneNumber, setPhoneNumber] = useState('');
 	const { onPhoneNumberChange } = props;
-	return (<div style={{ margin: 'auto', width: 400, marginTop: 80}}>
+	return (<div style={{ margin: 'auto', width: 400, marginTop: 60}}>
 				<LogoTitle />
 				<div>
 					<TextField
@@ -49,7 +52,7 @@ export const PhoneForm = (props: PhoneProps) => {
 export const NameForm = (props: NameProps) => {
 	const [userName, setUserName] = useState('');
 	const { onUserNameChange } = props;
-	return (<div style={{ margin: 'auto', width: 400, marginTop: 80}}>
+	return (<div style={{ margin: 'auto', width: 400, marginTop: 60}}>
 				<LogoTitle />
 				<div>
 					<TextField
@@ -86,11 +89,12 @@ export const SuccessPagePayAtCounter = ({ confirmationNumber }: { confirmationNu
 
 export const SuccessPagePayOnline = ({ confirmationNumber, onlinePayUrl }:
 	{ confirmationNumber: string; onlinePayUrl: string; }) => {
-	return (<div style={{ margin: 'auto', width: 500, marginTop: 100, }}>
+	return (<div style={{ margin: 'auto', width: 500, marginTop: 100, textAlign: 'center'}}>
 				<div style={{ marginBottom: 20, fontSize: 20,fontWeight: 600 }}>
 					燈單建立成功！ 序號：{confirmationNumber}
 				</div>
 				<div>直接前往：<a href={onlinePayUrl}>{onlinePayUrl}</a></div>
+				<br/>
 				<div>或掃描QR CODE：</div>
 				<div style={{marginTop: 20}}><QRCode value={onlinePayUrl} /></div>
 			</div>);

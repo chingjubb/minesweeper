@@ -91,7 +91,7 @@ export const GoToLightPageButton = (props: Props) => {
 				color="primary"
 				disabled={disabled}
 				onClick={onClick}
-				style={{marginRight:'20px', width:'150px'}}
+				style={{marginRight: 20, width: 300}}
 			>前往點燈</ColorButton>
 	);
 };

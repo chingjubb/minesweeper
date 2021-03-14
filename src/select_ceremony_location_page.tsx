@@ -1,6 +1,5 @@
 import React, { useState, Dispatch } from "react";
-import { GoToLightPageButton,
-		 GoToHomePage } from './add_user_button';
+import { GoToLightPageButton } from './add_user_button';
 import { Ceremony, Location } from './light_reducer';
 import Select from '@material-ui/core/Select';
 import { ActionTypes, LightAction, Light } from './light_reducer';
@@ -88,7 +87,6 @@ export const SelectCeremonyLocationPage = (props: Props) => {
 					loadAllLightsForCeremony(selectedCeremony.id);
 				}}
 			/>
-			<GoToHomePage onClick={()=>{ window.location.reload() }}/>
 		</div>
 	);
 };

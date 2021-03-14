@@ -33,6 +33,8 @@
     "build"
   ],
   "include": [
-    "src/*tsx"
+    "src/*tsx",
+    "src/*ts",
+    "src/custom.d.ts",
   ]
 }
