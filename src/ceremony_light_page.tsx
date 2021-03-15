@@ -318,18 +318,16 @@ export const CeremonyLightPage = (props: Props) => {
 							 selectedNames={selectedNames}
 							 onClose={() => { setShowSelectUserModal(false) }} />
 
-			<div style={{marginTop:'20px'}}>
-				<CeremonyLightTable users={state.users}
-							allLights={state.allLights}
-							dispatch={dispatch}
-							L108={!!state.L108}
-							Lking={!!state.Lking}
-							family={!!state.family}
-							onSubmitPayAtCounter={() => onSubmit(0)}
-							onSubmitPayOnline={() => onSubmit(1)}
-							location={state.location}
-							allUsers={state.allUsers} />
-			</div>
+			<CeremonyLightTable users={state.users}
+						allLights={state.allLights}
+						dispatch={dispatch}
+						L108={!!state.L108}
+						Lking={!!state.Lking}
+						family={!!state.family}
+						onSubmitPayAtCounter={() => onSubmit(0)}
+						onSubmitPayOnline={() => onSubmit(1)}
+						location={state.location}
+						allUsers={state.allUsers} />
 		</div>
 	);
 };
