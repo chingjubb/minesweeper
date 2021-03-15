@@ -299,8 +299,10 @@ export const CeremonyLightPage = (props: Props) => {
 	}
 
 	return (
-		<div style={{ margin: 50, marginLeft: 30}}>
-			{state.userName && <div style={{fontSize: 20, marginBottom: 20}}>聯絡人：{state.userName}大德</div>}
+		<div style={{ margin: 50, marginLeft: 30, marginTop: 20}}>
+			{state.location && <div style={{fontSize: 18, marginBottom: 5}}>點燈地點：{state.location.name}</div>}
+			{state.ceremony && <div style={{fontSize: 18, marginBottom: 5}}>法會場次：{state.ceremony.name}</div>}
+			{state.userName && <div style={{fontSize: 18, marginBottom: 20}}>聯絡人：{state.userName}大德</div>}
 			{state.allUsers.length > 0 && <SelectUserButton onClick={() => { setShowSelectUserModal(true) }} />}
 			<AddUserButton onClick={() => { setShowNewUserModal(true) }} />
 
