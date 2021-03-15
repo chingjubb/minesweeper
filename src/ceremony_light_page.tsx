@@ -172,7 +172,7 @@ export const CeremonyLightPage = (props: Props) => {
 	const getFormData = (payType: number) => { // 0: 櫃檯結帳, 1: 線上付款
 		console.log('getSessionData', getSessionData());
 		const urlParams = new URLSearchParams(window.location.search);
-		const locid = urlParams.get('locid') ?? 1;
+		const locid = urlParams.get('locid') ?? -1;
 
 		return { 'session_data': getSessionData(),
 				 'price': getTotalPrice(),
