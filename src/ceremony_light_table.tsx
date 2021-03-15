@@ -106,6 +106,8 @@ export const CeremonyLightTable = (props: Props) => {
 											allLights={allLights}
 											dispatch={dispatch}
 											location={location}
+											L108={L108}
+											Lking={Lking}
 										    lightCountMap={lightCountMap} />;
 							}
 						)}
@@ -128,6 +130,8 @@ type RowProps = {
 	dispatch: Dispatch<LightAction>;
 	allLights: Light[];
 	location?: Location;
+	L108?: boolean;
+	Lking?: boolean;
 };
 
 const getSubTotal = (lightCountMap: LightCountMap, allLights: Light[]): number => {
@@ -144,9 +148,7 @@ const getSubTotal = (lightCountMap: LightCountMap, allLights: Light[]): number =
 }
 
 const Row = (props: RowProps) => {
-	const { user, lightCountMap, dispatch, allLights, location } = props;
-	console.log('row user', user);
-	console.log('row lightCountMap', lightCountMap);
+	const { user, lightCountMap, dispatch, allLights, location, L108, Lking } = props;
 	const [showModal, setShowModal] = useState(false);
 	const lightNames: string[] = Object.keys(lightCountMap);
 	const subtotal = getSubTotal(lightCountMap, allLights);
@@ -157,6 +159,8 @@ const Row = (props: RowProps) => {
 				  lightCountMap: lightCountMap});
 		setShowModal(false);
 	};
+
+	const subtotalString = L108 || Lking ? '--' : subtotal;
 
 	return <TableRow>
 				<SelectLightModal open={showModal}
@@ -193,8 +197,8 @@ const Row = (props: RowProps) => {
 						}
 					})}	
 				</TableCell>
-				<TableCell>{subtotal === 0 ? '' : subtotal}</TableCell>
-				<TableCell>{subtotal === 0 ? '' : location?.name}</TableCell>
+				<TableCell>{subtotalString}</TableCell>
+				<TableCell>{location?.name}</TableCell>
 				<TableCell>{user.comment}</TableCell>
 				<TableCell>{user.address}</TableCell>
 			</TableRow>
