@@ -11,6 +11,7 @@ import { ActionTypes, LightAction, User, Light, LightCountMap, Location } from '
 import { SelectLightModal } from './select_light_modal';
 import { SubmitLightToCounterButton, SubmitLightPayOnlineButton, GoToHomePage, ColorButton } from './add_user_button';
 import Checkbox from '@material-ui/core/Checkbox';
+import NumberFormat from 'react-number-format';
 
 type Props = {
 	allUsers: User[];
@@ -114,7 +115,7 @@ export const CeremonyLightTable = (props: Props) => {
 					</TableBody>
 				</Table>
 			</TableContainer>
-			{total > 0 && <div style={{marginTop: 20}}>總價： {total}元</div>}
+			{total > 0 && <div style={{marginTop: 20}}>總價： <NumberFormat value={total} displayType={'text'} thousandSeparator={true} />元</div>}
 			<div style={{marginTop: 20}}>
 				<SubmitLightToCounterButton disabled={total <= 0} onClick={onSubmitPayAtCounter} />
 				<SubmitLightPayOnlineButton disabled={total <= 0} onClick={onSubmitPayOnline} />
@@ -160,7 +161,7 @@ const Row = (props: RowProps) => {
 		setShowModal(false);
 	};
 
-	const subtotalString = L108 || Lking ? '--' : subtotal;
+	const subtotalString = L108 || Lking ? '--' : <NumberFormat value={subtotal} displayType={'text'} thousandSeparator={true} />;
 
 	return <TableRow>
 				<SelectLightModal open={showModal}
