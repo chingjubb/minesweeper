@@ -194,16 +194,18 @@ export const CeremonyLightPage = (props: Props) => {
 	const getSessionData = () => {
 		let data: string[] = [];
 		const userNames = Object.keys(state.users);
+		const lightKingOr108Lights = state.L108 || state.Lking; // 是否點燈王或108燈
+
 		userNames.forEach((userName: string) => {
 			const user = state.allUsers.find((u) => u.name === userName);
-			const lightCountMap: LightCountMap | undefined = state.users[userName];
-			if (lightCountMap && user) {
+			if (user) {
+				const lightCountMap: LightCountMap | undefined = state.users[userName];
 				const num = getNumLightForUser(lightCountMap, state.allLights);
-				if (num > 0) {
+				if (num > 0 || lightKingOr108Lights) {
 					let data1 = `${userName}@${user.birth_cal}@${user.birth_year}@${user.birth_month}@${user.birth_day}@${user.address}@`
 					const countData: string[] = [];
 					state.allLights.forEach((light: Light) => {
-						const count = lightCountMap[light.name] ?? 0;
+						const count = lightCountMap ? (lightCountMap[light.name] ?? 0) : 0;
 						countData.push(`${count}`);
 					});
 					data1 += countData.join('^')
@@ -220,7 +222,6 @@ export const CeremonyLightPage = (props: Props) => {
 
 	const onSubmit = (payType: number) => {
 		console.log('click onSubmit the light table!!', getFormData(payType));
-		console.log(postData);
 		postData('https://maitreya-tw.com/api/celemony_request_store', getFormData(payType))
 		.then(data => {
 			console.log('on submit get back data', data); // JSON data parsed by `data.json()` call
@@ -270,7 +271,10 @@ export const CeremonyLightPage = (props: Props) => {
 		return totalCount;
 	}
 
-	const getNumLightForUser = (lightCountMap: LightCountMap, allLights: Light[]) => {
+	const getNumLightForUser = (lightCountMap: LightCountMap | undefined, allLights: Light[]) => {
+		if (!lightCountMap) {
+			return 0;
+		}
 		const lightNames: string[] = Object.keys(lightCountMap);
 		let count = 0;
 		lightNames.forEach((lightName: string) => {
