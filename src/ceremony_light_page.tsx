@@ -196,13 +196,16 @@ export const CeremonyLightPage = (props: Props) => {
 		const userNames = Object.keys(state.users);
 		const lightKingOr108Lights = state.L108 || state.Lking; // 是否點燈王或108燈
 
+		const urlParams = new URLSearchParams(window.location.search);
+		const locid = urlParams.get('locid') ?? -1;
+
 		userNames.forEach((userName: string) => {
 			const user = state.allUsers.find((u) => u.name === userName);
 			if (user) {
 				const lightCountMap: LightCountMap | undefined = state.users[userName];
 				const num = getNumLightForUser(lightCountMap, state.allLights);
 				if (num > 0 || lightKingOr108Lights) {
-					let data1 = `${userName}@${user.birth_cal}@${user.birth_year}@${user.birth_month}@${user.birth_day}@${user.address}@`
+					let data1 = `${userName}@${user.birth_cal}@${user.birth_year}@${user.birth_month}@${user.birth_day}@${user.address}@${locid}@@`
 					const countData: string[] = [];
 					state.allLights.forEach((light: Light) => {
 						const count = lightCountMap ? (lightCountMap[light.name] ?? 0) : 0;
