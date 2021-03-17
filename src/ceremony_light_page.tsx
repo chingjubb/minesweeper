@@ -13,6 +13,7 @@ import { NewUserModal } from './new_user_modal';
 import { SelectCeremonyLocationPage } from './select_ceremony_location_page';
 import { PhoneForm,
 		 NameForm,
+		 FindMemberForm,
 		 SuccessPagePayAtCounter,
 		 SuccessPagePayOnline } from './name_and_phone_form';
 
@@ -73,17 +74,14 @@ export const CeremonyLightPage = (props: Props) => {
 			});
 	}
 
-	const checkUser = (phoneNumber) => {
+	const checkUserWithPhoneNumber = (phoneNumber) => {
 		fetch('https://maitreya-tw.com/api/check_user/' + phoneNumber)
 			.then(res => res.json())
 			.then(json => {
 				const status = json['status'];
 				const type = json['type'];
-				console.log('status', status);
-				console.log('type', type);
 				const userName = json['name'];
 				const count = json['count'] ?? 0;
-				console.log('count', count);
 				if (userName && userName.length > 0) {
 					dispatch({type: 'setCurrentUserName', userName });
 				}
@@ -113,6 +111,13 @@ export const CeremonyLightPage = (props: Props) => {
 		return response.json(); // parses JSON response into native JavaScript objects
 	}
 
+	const findMemberByName = (userName: string) => {
+		postData('https://maitreya-tw.com/api/user_list', { 'keyword': userName })
+		.then(data => {
+			console.log('findMemberByName get back data', data); // JSON data parsed by `data.json()` call
+		});
+	}
+
 	console.log('state', state);
 
 	if (state.success && state.onlinePayUrl?.length > 0) {
@@ -120,16 +125,26 @@ export const CeremonyLightPage = (props: Props) => {
 									 onlinePayUrl={state.onlinePayUrl} />;
 	}
 
+	const showFindMemberForm = true; // 內部員工才可以使用的ＦＯＲＭ
+
 	if (state.success) {
 		return <SuccessPagePayAtCounter confirmationNumber={state.confirmationNumber} />;
 	}
 
 	if (state.phoneNumber.length === 0) {
-		return <PhoneForm onPhoneNumberChange={(phoneNumber: string) => {
-						 	  dispatch({type: 'setPhoneNumber', phoneNumber });
-						 	  checkUser(phoneNumber);
+		return <div>
+					<PhoneForm onPhoneNumberChange={(phoneNumber: string) => {
+							 	  dispatch({type: 'setPhoneNumber', phoneNumber });
+							 	  checkUserWithPhoneNumber(phoneNumber);
+							  }}
+				    />
+				    {showFindMemberForm &&
+			    		<FindMemberForm onClick={(userName: string) => {
+						 	  console.log('find member', userName);
+						 	  findMemberByName(userName);
 						  }}
-			   />
+				    />}
+			   </div>
 	} else if ((state.currentUserStatus === 0 || !state.currentUserStatus)
 				&& state.userName?.length === 0) {
 		return <NameForm onUserNameChange={(userName: string) => {

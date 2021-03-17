@@ -49,6 +49,33 @@ export const PhoneForm = (props: PhoneProps) => {
 			</div>);
 };
 
+
+type FindMemberProps = {
+	onClick: (userName: string) => void;
+};
+export const FindMemberForm = (props: FindMemberProps) => {
+	const [userName, setUserName] = useState('');
+	const { onClick } = props;
+	return (<div style={{ margin: 'auto', width: 400, marginTop: 60}}>
+				<div style={{ width: 300, textAlign: 'center', marginBottom: 20}}>OR</div>
+				<div>
+					<TextField
+						required
+						style={{ width: 300, margin: 5 }}
+						label={'請輸入會員關鍵字'}
+						variant="outlined"
+						value={userName}
+						placeholder="請輸入會員關鍵字"
+						onChange={(e) => { setUserName(e.target.value )}}
+					/>
+				</div>
+				<NextStepButton onClick={() => {
+									onClick(userName);
+								}}
+								disabled={userName.length === 0} />
+			</div>);
+};
+
 export const NameForm = (props: NameProps) => {
 	const [userName, setUserName] = useState('');
 	const { onUserNameChange } = props;
