@@ -110,6 +110,7 @@ export const CeremonyLightPage = (props: Props) => {
 				}
 				dispatch({type: 'setCurrentUserStatus', currentUserStatus: status });
 				dispatch({type: 'setCurrentUserType', currentUserType: type });
+				loadUserList(memberId);
 				setMemberFound(true);
 				setMembers([]);
 			});
