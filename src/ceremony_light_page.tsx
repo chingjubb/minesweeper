@@ -60,8 +60,23 @@ export const CeremonyLightPage = (props: Props) => {
 	}
 
 	// 載入點燈人紀錄
-	const loadUserList = (phoneNumber) => {
+	const loadUserListByPhone = (phoneNumber) => {
 		fetch('https://maitreya-tw.com/api/get_blessing_recs_by_cellphone/' + phoneNumber)
+			.then(res => res.json())
+			.then(json => {
+				if (json.constructor === Object && Object.keys(json).length === 0) {
+					console.log('no users');
+					return;
+				} else {
+					const users: User[] = json as User[];
+					console.log('fetch loadUsers!!! got json', users);
+					dispatch({type: ActionTypes.loadUsers, users});
+				}
+			});
+	}
+
+	const loadUserListByUserId = (memberId) => {
+		fetch('https://maitreya-tw.com/api/get_blessing_recs/' + memberId)
 			.then(res => res.json())
 			.then(json => {
 				if (json.constructor === Object && Object.keys(json).length === 0) {
@@ -89,7 +104,7 @@ export const CeremonyLightPage = (props: Props) => {
 				dispatch({type: 'setCurrentUserStatus', currentUserStatus: status });
 				dispatch({type: 'setCurrentUserType', currentUserType: type });
 				if (count > 0) {
-					loadUserList(phoneNumber); // 載入點燈人紀錄
+					loadUserListByPhone(phoneNumber); // 載入點燈人紀錄
 				}
 			});
 	}
@@ -110,7 +125,7 @@ export const CeremonyLightPage = (props: Props) => {
 				}
 				dispatch({type: 'setCurrentUserStatus', currentUserStatus: status });
 				dispatch({type: 'setCurrentUserType', currentUserType: type });
-				loadUserList(memberId);
+				loadUserListByUserId(memberId);
 				setMemberFound(true);
 				setMembers([]);
 			});

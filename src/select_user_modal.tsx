@@ -97,10 +97,10 @@ export const SelectUserModal = (props: Props) => {
 				<Button variant="contained"
 						color="primary"
 						onClick={onClick}
-						style={{width:'150px', marginRight:'20px'}}>確定</Button>
+						style={{width:'150px', marginRight:'20px', marginBottom: 20}}>確定</Button>
 				<Button variant="contained"
 						onClick={onCancel}
-						style={{width:'150px'}}>取消</Button>
+						style={{width:'150px', marginBottom: 20}}>取消</Button>
 			</div>
 		</Dialog>
   );
