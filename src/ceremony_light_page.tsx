@@ -16,6 +16,7 @@ import { PhoneForm,
 		 FindMemberForm,
 		 SuccessPagePayAtCounter,
 		 SuccessPagePayOnline } from './name_and_phone_form';
+import { FindMemberModal, Member } from './find_member_modal';
 
 type Props = {
 
@@ -111,10 +112,22 @@ export const CeremonyLightPage = (props: Props) => {
 		return response.json(); // parses JSON response into native JavaScript objects
 	}
 
+	const [members, setMembers] = useState<Member[]>([]);
+
 	const findMemberByName = (userName: string) => {
 		postData('https://maitreya-tw.com/api/user_list', { 'keyword': userName })
 		.then(data => {
 			console.log('findMemberByName get back data', data); // JSON data parsed by `data.json()` call
+			const keys = Object.keys(data);
+			const theMembers: Member[] = [];
+			keys.forEach((key: string) => {
+				const name = data[key];
+				if (name && key) {
+					theMembers.push({ id: key, name });
+				}
+			})
+			setMembers(theMembers);
+			console.log('members', members);
 		});
 	}
 
@@ -144,6 +157,7 @@ export const CeremonyLightPage = (props: Props) => {
 						 	  findMemberByName(userName);
 						  }}
 				    />}
+				    <FindMemberModal members={members} onClick={()=>{}} onClose={()=>{ setMembers([])}} open={members.length > 0} />
 			   </div>
 	} else if ((state.currentUserStatus === 0 || !state.currentUserStatus)
 				&& state.userName?.length === 0) {
