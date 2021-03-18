@@ -18,7 +18,7 @@ export type Member = {
 
 type Props = {
 	members: Member[];
-	onClick: (name : string) => void;
+	onClick: (memberId : string) => void;
 	onClose: () => void;
 	open: boolean;
 }
@@ -41,7 +41,7 @@ export const FindMemberModal = (props: Props) => {
 											<TableCell style={{textAlign: 'center'}}>
 												<Button variant="contained"
 														color="primary"
-														onClick={()=>{ onClick(member.name) }}
+														onClick={()=>{ onClick(member.id) }}
 														style={{width:200}}>
 														{member.name}
 												</Button>

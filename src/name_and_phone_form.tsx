@@ -66,7 +66,9 @@ export const FindMemberForm = (props: FindMemberProps) => {
 						variant="outlined"
 						value={userName}
 						placeholder="請輸入會員關鍵字"
-						onChange={(e) => { setUserName(e.target.value )}}
+						onChange={(e) => {
+							setUserName(e.target.value);
+						}}
 					/>
 				</div>
 				<NextStepButton onClick={() => {

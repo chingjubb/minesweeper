@@ -94,6 +94,27 @@ export const CeremonyLightPage = (props: Props) => {
 			});
 	}
 
+	const [members, setMembers] = useState<Member[]>([]);
+	const [memberFound, setMemberFound] = useState(false);
+
+	const selectUserWithMemberId = (memberId: string) => {
+		fetch('https://maitreya-tw.com/api/select_user/' + memberId)
+			.then(res => res.json())
+			.then(json => {
+				const status = json['status'];
+				const type = json['type'];
+				const userName = json['name'];
+				// const count = json['count'] ?? 0;
+				if (userName && userName.length > 0) {
+					dispatch({type: 'setCurrentUserName', userName });
+				}
+				dispatch({type: 'setCurrentUserStatus', currentUserStatus: status });
+				dispatch({type: 'setCurrentUserType', currentUserType: type });
+				setMemberFound(true);
+				setMembers([]);
+			});
+	}
+
 	async function postData (url = '', data = {}) {
 		  // Default options are marked with *
 		const response = await fetch(url, {
@@ -111,8 +132,6 @@ export const CeremonyLightPage = (props: Props) => {
 		});
 		return response.json(); // parses JSON response into native JavaScript objects
 	}
-
-	const [members, setMembers] = useState<Member[]>([]);
 
 	const findMemberByName = (userName: string) => {
 		postData('https://maitreya-tw.com/api/user_list', { 'keyword': userName })
@@ -144,7 +163,7 @@ export const CeremonyLightPage = (props: Props) => {
 		return <SuccessPagePayAtCounter confirmationNumber={state.confirmationNumber} />;
 	}
 
-	if (state.phoneNumber.length === 0) {
+	if (state.phoneNumber.length === 0 && !memberFound) {
 		return <div>
 					<PhoneForm onPhoneNumberChange={(phoneNumber: string) => {
 							 	  dispatch({type: 'setPhoneNumber', phoneNumber });
@@ -157,7 +176,13 @@ export const CeremonyLightPage = (props: Props) => {
 						 	  findMemberByName(userName);
 						  }}
 				    />}
-				    <FindMemberModal members={members} onClick={()=>{}} onClose={()=>{ setMembers([])}} open={members.length > 0} />
+				    <FindMemberModal
+				    	members={members}
+					    onClick={(memberId: string) => {
+					    	selectUserWithMemberId(memberId);
+					    }}
+					    onClose={()=>{ setMembers([])}}
+					    open={members.length > 0} />
 			   </div>
 	} else if ((state.currentUserStatus === 0 || !state.currentUserStatus)
 				&& state.userName?.length === 0) {
