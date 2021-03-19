@@ -75,6 +75,8 @@ export const CeremonyLightPage = (props: Props) => {
 			});
 	}
 
+	const [selectedMemberId, setSelectedMemberId] = useState('-1');
+
 	const loadUserListByUserId = (memberId) => {
 		fetch('https://maitreya-tw.com/api/get_blessing_recs/' + memberId)
 			.then(res => res.json())
@@ -126,6 +128,7 @@ export const CeremonyLightPage = (props: Props) => {
 				dispatch({type: 'setCurrentUserStatus', currentUserStatus: status });
 				dispatch({type: 'setCurrentUserType', currentUserType: type });
 				loadUserListByUserId(memberId);
+				setSelectedMemberId(memberId);
 				setMemberFound(true);
 				setMembers([]);
 			});
@@ -244,21 +247,25 @@ export const CeremonyLightPage = (props: Props) => {
 		const urlParams = new URLSearchParams(window.location.search);
 		const locid = urlParams.get('locid') ?? -1;
 
-		return { 'session_data': getSessionData(),
-				 'price': getTotalPrice(),
-				 'lighting_num': getTotalNumLight(),
-				 'locid': locid,
-				 'contact_name': state.userName,
-				 'contact_phone': state.phoneNumber,
-				 'check_user': state.currentUserStatus,
-				 'check_user_type': state.currentUserType,
-				 'lighting_locid': state.location.id,
-				 'celemony_code': state.ceremony.id,
-				 'L108': state.L108 ? 1 : 0, // 108燈
-				 'Lking': state.Lking ? 1: 0, // 燈王
-				 'family': state.family ? 1: 0, // 是否顯示闔家
-				 'pay_type': payType, // 0: 櫃檯結帳, 1: 線上付款
-				};
+		const formData: any = { 'session_data': getSessionData(),
+								'price': getTotalPrice(),
+								'lighting_num': getTotalNumLight(),
+								'locid': locid,
+								'contact_name': state.userName,
+								'contact_phone': state.phoneNumber,
+								'check_user': state.currentUserStatus,
+								'check_user_type': state.currentUserType,
+								'lighting_locid': state.location.id,
+								'celemony_code': state.ceremony.id,
+								'L108': state.L108 ? 1 : 0, // 108燈
+								'Lking': state.Lking ? 1: 0, // 燈王
+								'family': state.family ? 1: 0, // 是否顯示闔家
+								'pay_type': payType, // 0: 櫃檯結帳, 1: 線上付款
+						   	  };
+		if (showFindMemberForm) {
+			formData['cusid'] = selectedMemberId;
+		}
+		return formData;
 	}
 
 	const getSessionData = () => {
