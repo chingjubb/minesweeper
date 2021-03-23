@@ -24,6 +24,8 @@ type Props = {
 	L108: boolean;
 	Lking: boolean;
 	family: boolean;
+	isLoadingPayAtCounter?: boolean;
+	isLoadingPayOnline?: boolean;
 }
 
 export const CeremonyLightTable = (props: Props) => {
@@ -34,6 +36,8 @@ export const CeremonyLightTable = (props: Props) => {
 			location,
 			onSubmitPayAtCounter,
 			onSubmitPayOnline,
+			isLoadingPayAtCounter,
+			isLoadingPayOnline,
 			L108, Lking, family } = props;
 
 	let total = 0;
@@ -117,9 +121,16 @@ export const CeremonyLightTable = (props: Props) => {
 			</TableContainer>
 			{total > 0 && <div style={{marginTop: 20}}>總價： <NumberFormat value={total} displayType={'text'} thousandSeparator={true} />元</div>}
 			<div style={{marginTop: 20}}>
-				<SubmitLightToCounterButton disabled={total <= 0} onClick={onSubmitPayAtCounter} />
-				<SubmitLightPayOnlineButton disabled={total <= 0} onClick={onSubmitPayOnline} />
-				<GoToHomePage onClick={() => { window.location.reload(); }}/>
+				<SubmitLightToCounterButton
+					disabled={total <= 0 || isLoadingPayAtCounter}
+					buttonLabel={isLoadingPayAtCounter ? '載入中...' : undefined}
+					onClick={onSubmitPayAtCounter} />
+				<SubmitLightPayOnlineButton
+					disabled={total <= 0 || isLoadingPayOnline}
+					buttonLabel={isLoadingPayOnline ? '載入中...' : undefined}
+					onClick={onSubmitPayOnline} />
+				<GoToHomePage
+					onClick={() => { window.location.reload(); }}/>
 			</div>
 		</div>
   );

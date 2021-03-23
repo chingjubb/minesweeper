@@ -38,6 +38,8 @@ export const CeremonyLightPage = (props: Props) => {
 	const selectedNames = Object.keys(state.users);
 	const [isLoadingFindByPhone, setIsLoadingFindByPhone] = useState(false);
 	const [isLoadingFindByMemberName, setIsLoadingFindByMemberName] = useState(false);
+	const [isLoadingPayAtCounter, setIsLoadingPayAtCounter] = useState(false);
+	const [isLoadingPayOnline, setIsLoadingPayOnline] = useState(false);
 
 	useEffect(()=>{
 		loadAllLocations();
@@ -327,6 +329,8 @@ export const CeremonyLightPage = (props: Props) => {
 			} else {
 				console.log("failed!!");
 			}
+			setIsLoadingPayOnline(false);
+			setIsLoadingPayAtCounter(false);
 		});
 	}
 
@@ -415,8 +419,16 @@ export const CeremonyLightPage = (props: Props) => {
 						L108={!!state.L108}
 						Lking={!!state.Lking}
 						family={!!state.family}
-						onSubmitPayAtCounter={() => onSubmit(0)}
-						onSubmitPayOnline={() => onSubmit(1)}
+						onSubmitPayAtCounter={() => { 
+							setIsLoadingPayAtCounter(true);
+							onSubmit(0);
+						}}
+						onSubmitPayOnline={() => {
+							setIsLoadingPayOnline(true);
+							onSubmit(1); 
+						}}
+						isLoadingPayAtCounter={isLoadingPayAtCounter}
+						isLoadingPayOnline={isLoadingPayOnline}
 						location={state.location}
 						allUsers={state.allUsers} />
 		</div>

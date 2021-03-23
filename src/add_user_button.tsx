@@ -98,11 +98,12 @@ export const GoToLightPageButton = (props: Props) => {
 };
 
 export const GoToHomePage = (props: Props) => {
-	const { onClick } = props;
+	const { onClick, disabled } = props;
 	return (
 		<Button variant="contained"
 				color="default"
 				onClick={onClick}
+				disabled={disabled}
 				style={{marginRight:'20px', width:'150px'}}
 			>回首頁</Button>
 	);
@@ -121,26 +122,26 @@ export const SubmitLightButton = (props: Props) => {
 };
 
 export const SubmitLightToCounterButton = (props: Props) => {
-	const { onClick, disabled } = props; 
+	const { onClick, disabled, buttonLabel } = props; 
 	return (
 		<ColorButton variant="contained"
 				color="primary"
 				disabled={disabled}
 				onClick={onClick}
 				style={{marginRight:'20px', width:'150px'}}
-			>櫃檯結帳</ColorButton>
+			>{buttonLabel ?? '櫃檯結帳'}</ColorButton>
 	);
 };
 
 export const SubmitLightPayOnlineButton = (props: Props) => {
-	const { onClick, disabled } = props; 
+	const { onClick, disabled, buttonLabel } = props; 
 	return (
 		<ColorButton variant="contained"
 				color="primary"
 				disabled={disabled}
 				onClick={onClick}
 				style={{marginRight:'20px', width:'150px'}}
-			>線上刷卡</ColorButton>
+			>{buttonLabel ?? '線上刷卡'}</ColorButton>
 	);
 };
 
