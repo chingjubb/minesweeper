@@ -12,6 +12,8 @@ type Props = {
 
 type PhoneProps = {
 	onPhoneNumberChange: (phoneNumber: string) => void;
+	buttonDisabled?: boolean;
+	buttonLabel?: string;
 };
 
 type NameProps = {
@@ -28,7 +30,7 @@ export const LogoTitle = () => {
 
 export const PhoneForm = (props: PhoneProps) => {
 	const [phoneNumber, setPhoneNumber] = useState('');
-	const { onPhoneNumberChange } = props;
+	const { onPhoneNumberChange, buttonDisabled, buttonLabel } = props;
 	return (<div style={{ margin: 'auto', width: 400, marginTop: 60}}>
 				<LogoTitle />
 				<div>
@@ -45,7 +47,8 @@ export const PhoneForm = (props: PhoneProps) => {
 				<NextStepButton onClick={() => {
 									onPhoneNumberChange(phoneNumber);
 								}}
-								disabled={phoneNumber.length === 0} />
+								buttonLabel={buttonLabel ?? '下一步'}
+								disabled={phoneNumber.length === 0 || buttonDisabled} />
 			</div>);
 };
 
@@ -56,7 +59,7 @@ type FindMemberProps = {
 export const FindMemberForm = (props: FindMemberProps) => {
 	const [userName, setUserName] = useState('');
 	const { onClick } = props;
-	return (<div style={{ margin: 'auto', width: 400, marginTop: 60}}>
+	return (<div style={{ margin: 'auto', width: 400, marginTop: 20}}>
 				<div style={{ width: 300, textAlign: 'center', marginBottom: 20}}>OR</div>
 				<div>
 					<TextField

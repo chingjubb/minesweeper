@@ -36,6 +36,7 @@ export const CeremonyLightPage = (props: Props) => {
 	const [showNewUserModal, setShowNewUserModal] = useState(false);
 	const [showSelectUserModal, setShowSelectUserModal] = useState(false);
 	const selectedNames = Object.keys(state.users);
+	const [isLoadingFindByPhone, setIsLoadingFindByPhone] = useState(false);
 
 	useEffect(()=>{
 		loadAllLocations();
@@ -93,6 +94,7 @@ export const CeremonyLightPage = (props: Props) => {
 	}
 
 	const checkUserWithPhoneNumber = (phoneNumber) => {
+		setIsLoadingFindByPhone(true);
 		fetch('https://maitreya-tw.com/api/check_user/' + phoneNumber)
 			.then(res => res.json())
 			.then(json => {
@@ -108,6 +110,7 @@ export const CeremonyLightPage = (props: Props) => {
 				if (count > 0) {
 					loadUserListByPhone(phoneNumber); // 載入點燈人紀錄
 				}
+				setIsLoadingFindByPhone(false);
 			});
 	}
 
@@ -171,23 +174,25 @@ export const CeremonyLightPage = (props: Props) => {
 
 	console.log('state', state);
 
+	const showFindMemberForm = true; // 內部員工才可以使用的ＦＯＲＭ
+
 	if (state.success && state.onlinePayUrl?.length > 0) {
 		return <SuccessPagePayOnline confirmationNumber={state.confirmationNumber}
 									 onlinePayUrl={state.onlinePayUrl} />;
 	}
 
-	const showFindMemberForm = true; // 內部員工才可以使用的ＦＯＲＭ
-
 	if (state.success) {
 		return <SuccessPagePayAtCounter confirmationNumber={state.confirmationNumber} />;
 	}
 
-	if (state.phoneNumber.length === 0 && !memberFound) {
+	if ((state.phoneNumber.length === 0 && !memberFound) || isLoadingFindByPhone) {
 		return <div>
 					<PhoneForm onPhoneNumberChange={(phoneNumber: string) => {
 							 	  dispatch({type: 'setPhoneNumber', phoneNumber });
 							 	  checkUserWithPhoneNumber(phoneNumber);
 							  }}
+							  buttonDisabled={isLoadingFindByPhone}
+							  buttonLabel={isLoadingFindByPhone ? '載入中...': '下一步'}
 				    />
 				    {showFindMemberForm &&
 			    		<FindMemberForm onClick={(userName: string) => {

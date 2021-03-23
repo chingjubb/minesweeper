@@ -6,6 +6,7 @@ import { purple } from '@material-ui/core/colors';
 type Props = {
 	onClick?: () => void;
 	disabled?: boolean;
+	buttonLabel?: string;
 }
 
 export const ColorButton = withStyles((theme) => ({
@@ -178,14 +179,15 @@ export const EditUserButton = (props: Props) => {
 };
 
 export const NextStepButton = (props: Props) => {
-	const { onClick, disabled } = props; 
+	const { onClick, disabled, buttonLabel } = props; 
 	return (
 		<ColorButton variant="contained"
 				color="primary"
 				disabled={disabled}
 				onClick={onClick}
-				style={{margin: 5, marginRight: 20, width: 300, marginTop: 10}}
-			>下一步</ColorButton>
+				style={{margin: 5, marginRight: 20, width: 300, marginTop: 10}}>
+			{buttonLabel ?? '下一步'}
+		</ColorButton>
 	);
 };
 
