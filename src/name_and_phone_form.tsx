@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
-import { NextStepButton, FinishButton } from './add_user_button';
+import { NextStepButton, FinishButton, GoToHomePage } from './add_user_button';
 import QRCode from "react-qr-code";
 import logo from './logo.png';
 
@@ -118,14 +118,15 @@ export const SuccessPagePayAtCounter = ({ confirmationNumber }: { confirmationNu
 
 export const SuccessPagePayOnline = ({ confirmationNumber, onlinePayUrl }:
 	{ confirmationNumber: string; onlinePayUrl: string; }) => {
-	return (<div style={{ margin: 'auto', width: 500, marginTop: 100, textAlign: 'center'}}>
+	return (<div style={{ margin: 'auto', width: 500, marginTop: 60, textAlign: 'center'}}>
 				<div style={{ marginBottom: 20, fontSize: 20,fontWeight: 600 }}>
 					燈單建立成功！ 序號：{confirmationNumber}
 				</div>
-				<div>直接前往：<a href={onlinePayUrl}>{onlinePayUrl}</a></div>
+				<div>直接前往：<a href={onlinePayUrl} target="_blank">{onlinePayUrl}</a></div>
 				<br/>
 				<div>或掃描QR CODE：</div>
-				<div style={{marginTop: 20}}><QRCode value={onlinePayUrl} /></div>
+				<div style={{marginTop: 20, marginBottom: 50}}><QRCode value={onlinePayUrl} /></div>
+				<GoToHomePage onClick={() => { window.location.reload(); }}/>
 			</div>);
 };
 
