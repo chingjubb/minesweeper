@@ -55,10 +55,12 @@ export const PhoneForm = (props: PhoneProps) => {
 
 type FindMemberProps = {
 	onClick: (userName: string) => void;
+	buttonDisabled?: boolean;
+	buttonLabel?: string;
 };
 export const FindMemberForm = (props: FindMemberProps) => {
 	const [userName, setUserName] = useState('');
-	const { onClick } = props;
+	const { onClick, buttonDisabled, buttonLabel } = props;
 	return (<div style={{ margin: 'auto', width: 400, marginTop: 20}}>
 				<div style={{ width: 300, textAlign: 'center', marginBottom: 20}}>OR</div>
 				<div>
@@ -77,7 +79,8 @@ export const FindMemberForm = (props: FindMemberProps) => {
 				<NextStepButton onClick={() => {
 									onClick(userName);
 								}}
-								disabled={userName.length === 0} />
+								buttonLabel={buttonLabel ?? '下一步'}
+								disabled={userName.length === 0 || buttonDisabled} />
 			</div>);
 };
 

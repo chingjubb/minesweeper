@@ -37,6 +37,7 @@ export const CeremonyLightPage = (props: Props) => {
 	const [showSelectUserModal, setShowSelectUserModal] = useState(false);
 	const selectedNames = Object.keys(state.users);
 	const [isLoadingFindByPhone, setIsLoadingFindByPhone] = useState(false);
+	const [isLoadingFindByMemberName, setIsLoadingFindByMemberName] = useState(false);
 
 	useEffect(()=>{
 		loadAllLocations();
@@ -156,6 +157,7 @@ export const CeremonyLightPage = (props: Props) => {
 	}
 
 	const findMemberByName = (userName: string) => {
+		setIsLoadingFindByMemberName(true)
 		postData('https://maitreya-tw.com/api/user_list', { 'keyword': userName })
 		.then(data => {
 			console.log('findMemberByName get back data', data); // JSON data parsed by `data.json()` call
@@ -168,6 +170,7 @@ export const CeremonyLightPage = (props: Props) => {
 				}
 			})
 			setMembers(theMembers);
+			setIsLoadingFindByMemberName(false);
 			console.log('members', members);
 		});
 	}
@@ -195,10 +198,13 @@ export const CeremonyLightPage = (props: Props) => {
 							  buttonLabel={isLoadingFindByPhone ? '載入中...': '下一步'}
 				    />
 				    {showFindMemberForm &&
-			    		<FindMemberForm onClick={(userName: string) => {
-						 	  console.log('find member', userName);
-						 	  findMemberByName(userName);
-						  }}
+			    		<FindMemberForm
+			    			buttonDisabled={isLoadingFindByMemberName}
+			    			buttonLabel={isLoadingFindByMemberName ? '載入中...': '下一步'}
+			    			onClick={(userName: string) => {
+						 		console.log('find member', userName);
+						 		findMemberByName(userName);
+						  	}}
 				    />}
 				    <FindMemberModal
 				    	members={members}
