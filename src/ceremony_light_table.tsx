@@ -171,20 +171,31 @@ const Row = (props: RowProps) => {
 								  onClose={() => { setShowModal(false) }}
 								  allLights={allLights} />
 				<TableCell>
-					<ColorButton variant="contained"
-							color="primary"
-							onClick={() => { setShowModal(true) }}
-							style={{width:'60px', marginRight:'10px'}}>編輯</ColorButton>
-					<Button variant="contained"
-							onClick={() => {
-								dispatch({ type: ActionTypes.removeUserFromLight,
-										   userName: user.name });
-							}}
-							style={{width:'60px'}}>刪除</Button>
+					<div style={{ minWidth: 150 }}>
+						<ColorButton variant="contained"
+								color="primary"
+								onClick={() => { setShowModal(true) }}
+								style={{width:'60px', marginRight:'10px'}}>編輯</ColorButton>
+						<Button variant="contained"
+								onClick={() => {
+									dispatch({ type: ActionTypes.removeUserFromLight,
+											   userName: user.name });
+								}}
+								style={{width:'60px'}}>刪除</Button>
+					</div>
 				</TableCell>
-				<TableCell>{user.name}</TableCell>
-				<TableCell>{userBirthdayString(user)}</TableCell>
 				<TableCell>
+					<div style={{ minWidth: 30, maxWidth: 60 }}>
+						{user.name}
+					</div>
+				</TableCell>
+				<TableCell>
+					<div style={{ minWidth: 110 }}>
+						{userBirthdayString(user)}
+					</div>
+				</TableCell>
+				<TableCell>
+					<div style={{ minWidth: 150 }}>
 					{lightNames.map((lightName: string) => {
 						const theLight = allLights.find((light: Light) => light.name === lightName);
 						if (!theLight) {
@@ -196,11 +207,24 @@ const Row = (props: RowProps) => {
 						} else {
 							return null;
 						}
-					})}	
+					})}
+					</div>
 				</TableCell>
-				<TableCell>{subtotalString}</TableCell>
-				<TableCell>{location?.name}</TableCell>
-				<TableCell>{user.comment}</TableCell>
+				<TableCell>
+					<div style={{ minWidth: 40 }}>
+						{subtotalString}
+					</div>
+				</TableCell>
+				<TableCell>
+					<div style={{ minWidth: 100 }}>
+						{location?.name}
+					</div>
+				</TableCell>
+				<TableCell>
+					<div style={{ maxWidth: 200 }}>
+						{user.comment}
+					</div>
+				</TableCell>
 				<TableCell>{user.address}</TableCell>
 			</TableRow>
 };
