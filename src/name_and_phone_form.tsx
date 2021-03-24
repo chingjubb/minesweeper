@@ -128,7 +128,7 @@ export const SuccessPagePayOnline = ({ confirmationNumber, onlinePayUrl }:
 				<div style={{ marginBottom: 20, fontSize: 20,fontWeight: 600 }}>
 					燈單建立成功！ 序號：{confirmationNumber}
 				</div>
-				<div>直接前往：<a href={onlinePayUrl} target="_blank">{onlinePayUrl}</a></div>
+				<div>直接前往：<a href={onlinePayUrl} target="_blank" rel="noreferrer">{onlinePayUrl}</a></div>
 				<br/>
 				<div>或掃描QR CODE：</div>
 				<div style={{marginTop: 20, marginBottom: 50}}><QRCode value={onlinePayUrl} /></div>
