@@ -276,9 +276,18 @@ export const CeremonyLightPage = (props: Props) => {
 						   	  };
 		if (showFindMemberForm) {
 			formData['cusid'] = selectedMemberId;
+		} else {
+			formData['cusid'] = -1;
 		}
 		return formData;
 	}
+
+	const removeSpecialCharacters = (text: string) => {
+		while (text.includes('@') || text.includes('^') || text.includes('|')) {
+		       text = text.replace('^', ',').replace('@', ',').replace('|', ',');
+		}
+		return text;
+	};
 
 	const getSessionData = () => {
 		let data: string[] = [];
@@ -291,8 +300,10 @@ export const CeremonyLightPage = (props: Props) => {
 			if (user) {
 				const lightCountMap: LightCountMap | undefined = state.users[userName];
 				const num = getNumLightForUser(lightCountMap, state.allLights);
+				const comment = removeSpecialCharacters(user.comment ?? '');
+
 				if (num > 0 || lightKingOr108Lights) {
-					let data1 = `${userName}@${user.birth_cal}@${user.birth_year}@${user.birth_month}@${user.birth_day}@${user.address}@${lighting_locid}@@`
+					let data1 = `${userName}@${user.birth_cal}@${user.birth_year}@${user.birth_month}@${user.birth_day}@${user.address}@${lighting_locid}@${comment}@`
 					const countData: string[] = [];
 					state.allLights.forEach((light: Light) => {
 						const count = lightCountMap ? (lightCountMap[light.name] ?? 0) : 0;
