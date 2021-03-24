@@ -26,6 +26,7 @@ type Props = {
 	family: boolean;
 	isLoadingPayAtCounter?: boolean;
 	isLoadingPayOnline?: boolean;
+	hasPayOnlineButton?: boolean;
 }
 
 export const CeremonyLightTable = (props: Props) => {
@@ -38,6 +39,7 @@ export const CeremonyLightTable = (props: Props) => {
 			onSubmitPayOnline,
 			isLoadingPayAtCounter,
 			isLoadingPayOnline,
+			hasPayOnlineButton,
 			L108, Lking, family } = props;
 
 	let total = 0;
@@ -125,10 +127,10 @@ export const CeremonyLightTable = (props: Props) => {
 					disabled={total <= 0 || isLoadingPayAtCounter}
 					buttonLabel={isLoadingPayAtCounter ? '載入中...' : undefined}
 					onClick={onSubmitPayAtCounter} />
-				<SubmitLightPayOnlineButton
+				{hasPayOnlineButton && <SubmitLightPayOnlineButton
 					disabled={total <= 0 || isLoadingPayOnline}
 					buttonLabel={isLoadingPayOnline ? '載入中...' : undefined}
-					onClick={onSubmitPayOnline} />
+					onClick={onSubmitPayOnline} />}
 				<GoToHomePage
 					onClick={() => { window.location.reload(); }}/>
 			</div>

@@ -179,7 +179,8 @@ export const CeremonyLightPage = (props: Props) => {
 
 	console.log('state', state);
 
-	const showFindMemberForm = true; // 內部員工才可以使用的ＦＯＲＭ
+	const showFindMemberForm = false; // 內部員工才可以使用的ＦＯＲＭ
+	const hasPayOnlineButton = true;
 
 	if (state.success && state.onlinePayUrl?.length > 0) {
 		return <SuccessPagePayOnline confirmationNumber={state.confirmationNumber}
@@ -257,9 +258,8 @@ export const CeremonyLightPage = (props: Props) => {
 
 	const getFormData = (payType: number) => { // 0: 櫃檯結帳, 1: 線上付款
 		console.log('getSessionData', getSessionData());
-		const urlParams = new URLSearchParams(window.location.search);
-		const locid = urlParams.get('locid') ?? -1;
-
+		const locid = window.location.pathname?.replace('/', '') ?? -1;
+		console.log('new locid is ', locid);
 		const formData: any = { 'session_data': getSessionData(),
 								'price': getTotalPrice(),
 								'lighting_num': getTotalNumLight(),
@@ -430,6 +430,7 @@ export const CeremonyLightPage = (props: Props) => {
 						isLoadingPayAtCounter={isLoadingPayAtCounter}
 						isLoadingPayOnline={isLoadingPayOnline}
 						location={state.location}
+						hasPayOnlineButton={hasPayOnlineButton}
 						allUsers={state.allUsers} />
 		</div>
 	);
