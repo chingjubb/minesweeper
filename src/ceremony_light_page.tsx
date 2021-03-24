@@ -19,8 +19,10 @@ import { PhoneForm,
 import { FindMemberModal, Member } from './find_member_modal';
 
 type Props = {
-
 };
+
+const showFindMemberForm = false; // 內部員工才可以使用的ＦＯＲＭ
+const hasPayOnlineButton = false;
 
 export const CeremonyLightPage = (props: Props) => {
 	const initialState: LightState = { allUsers: [],
@@ -178,9 +180,6 @@ export const CeremonyLightPage = (props: Props) => {
 	}
 
 	console.log('state', state);
-
-	const showFindMemberForm = false; // 內部員工才可以使用的ＦＯＲＭ
-	const hasPayOnlineButton = true;
 
 	if (state.success && state.onlinePayUrl?.length > 0) {
 		return <SuccessPagePayOnline confirmationNumber={state.confirmationNumber}
