@@ -45,11 +45,11 @@ export const NewUserModal = (props: Props) => {
 				fullWidth={false}
 				>
 			<form autoComplete="on"
-				  style={{width:'800px', paddingLeft:'50px', paddingRight:'50px', paddingBottom:30}}>
+				  style={{maxWidth:800, paddingLeft:30, paddingRight:30, paddingBottom:30, paddingTop: 10}}>
 				<DialogTitle>新增點燈人</DialogTitle>
 				<div>
 					<TextField required
-						style={{width: "300px", margin: "5px"}}
+						style={{width: 320, margin: "5px"}}
 						label={'姓名'} variant="outlined"
 						autoFocus
 						value={name} placeholder="請輸入點燈者姓名"
@@ -58,27 +58,27 @@ export const NewUserModal = (props: Props) => {
 				</div>
 				<div>
 					<TextField
-						style={{width: "150px", margin: "5px"}}
+						style={{width: 155, margin: "5px"}}
 						label={'曆別'} variant="outlined"
 						value={yearType} placeholder="國曆"
 						onChange={(e) => { setYearType(e.target.value); }}
 					/>
 					<TextField
-						style={{width: "150px", margin: "5px"}}
+						style={{width: 155, margin: "5px"}}
 						label={'生年'} variant="outlined"
 						value={year} placeholder="（西元/民國）吉"
 						error={Number.isInteger(parseInt(year)) && parseInt(year) <= 0}
 						onChange={(e) => { setYear(e.target.value); }}
 					/>
 					<TextField
-						style={{width: "150px", margin: "5px"}}
+						style={{width: 155, margin: "5px"}}
 						label={'生月'} variant="outlined"
 						value={month} placeholder="吉"
 						error={Number.isInteger(parseInt(month)) && (parseInt(month) <= 0 || parseInt(month) > 12) }
 						onChange={(e) => { setMonth(e.target.value); }}
 					/>
 					<TextField
-						style={{width: "150px", margin: "5px"}}
+						style={{width: 155, margin: "5px"}}
 						label={'生日'} variant="outlined"
 						value={day} placeholder="吉"
 						error={Number.isInteger(parseInt(day)) && (parseInt(day) <= 0 || parseInt(day) > 31)}
