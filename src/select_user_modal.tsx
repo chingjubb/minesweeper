@@ -71,7 +71,7 @@ export const SelectUserModal = (props: Props) => {
 							{allUsers.map((user: User) => {
 								const identifier = user.id ? user.id.toString() : user.name;
 								let checked = selectedNameState.includes(identifier);
-								return <TableRow key={identifier + checked.toString()}>
+								return <TableRow key={identifier + checked.toString() + user.address + user.name}>
 											<TableCell style={{width: 50}}>
 												<Checkbox
 													checked={checked}

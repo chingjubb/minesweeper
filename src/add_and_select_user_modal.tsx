@@ -99,7 +99,7 @@ export const AddAndSelectUserModal = (props: Props) => {
 						<TableBody>
 							{users.map((user: User, index: number) => {
 								return <Row user={user}
-											key={user.name + index}
+											key={user.id + user.name + index}
 											onDelete={()=>{
 												deleteUserAtIndex(index);
 											}}

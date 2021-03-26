@@ -289,6 +289,21 @@ export const CeremonyLightPage = (props: Props) => {
 		return text;
 	};
 
+	const getNumLightForUser = (lightCountMap: LightCountMap | undefined, allLights: Light[]) => {
+		if (!lightCountMap) {
+			return 0;
+		}
+		const lightNames: string[] = Object.keys(lightCountMap);
+		let count = 0;
+		lightNames.forEach((lightName: string) => {
+			const theLight: Light | undefined = allLights.find((light: Light) => light.name === lightName);
+			if (theLight) {
+				count += lightCountMap[lightName] ?? 0;
+			}
+		});
+		return count;
+	}
+
 	const getSessionData = () => {
 		let data: string[] = [];
 		const identifiers = Object.keys(state.users);
@@ -323,6 +338,8 @@ export const CeremonyLightPage = (props: Props) => {
 		});
 		return data.join('|');
 	}
+
+	console.log('getSessionData', getSessionData());
 
 	const onSubmit = (payType: number) => {
 		console.log('click onSubmit the light table!!', getFormData(payType));
@@ -377,20 +394,6 @@ export const CeremonyLightPage = (props: Props) => {
 		return totalCount;
 	}
 
-	const getNumLightForUser = (lightCountMap: LightCountMap | undefined, allLights: Light[]) => {
-		if (!lightCountMap) {
-			return 0;
-		}
-		const lightNames: string[] = Object.keys(lightCountMap);
-		let count = 0;
-		lightNames.forEach((lightName: string) => {
-			const theLight: Light | undefined = allLights.find((light: Light) => light.name === lightName);
-			if (theLight) {
-				count += lightCountMap[lightName] ?? 0;
-			}
-		});
-		return count;
-	}
 	const getSubTotal = (lightCountMap: LightCountMap, allLights: Light[]): number => {
 		const lightNames: string[] = Object.keys(lightCountMap);
 		let subtotal = 0;

@@ -88,7 +88,7 @@ export const CeremonyLightTable = (props: Props) => {
 					顯示闔府
 				</span>
 			</div>
-			<TableContainer component={Paper} style={{ width: 1140 }}>
+			<TableContainer component={Paper} style={{ width: 1120 }}>
 				<Table aria-label="simple table">
 					<TableHead>
 						<TableRow style={{ backgroundColor: '#D8AA56' }}>
