@@ -238,18 +238,18 @@ export const CeremonyLightPage = (props: Props) => {
 	}
 
 	const onSubmitSelectUserModal = (newSelectedUserIdentifier: string[]) => {
-		newSelectedUserIdentifier.forEach((name) => {
-			if (selectedIdentifiers.includes(name)) {
+		newSelectedUserIdentifier.forEach((identifier) => {
+			if (selectedIdentifiers.includes(identifier)) {
 				// Do nothing
 			} else {
-				dispatch({ type: ActionTypes.selectUser, userName: name });
+				dispatch({ type: ActionTypes.selectUser, userName: identifier });
 			}
 		});
-		selectedIdentifiers.forEach((name) => {
-			if (newSelectedUserIdentifier.includes(name)) {
+		selectedIdentifiers.forEach((identifier) => {
+			if (newSelectedUserIdentifier.includes(identifier)) {
 				// Do nothing
 			} else {
-				dispatch({ type: ActionTypes.removeUserFromLight, userName: name });
+				dispatch({ type: ActionTypes.removeUserFromLight, userName: identifier });
 			}
 		})
 		setShowSelectUserModal(false);

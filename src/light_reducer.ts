@@ -184,10 +184,8 @@ export const LightReducer = (
 			return produce(state, (draft) => {
 				console.log('addNewUser', action.user);
 				draft.allUsers.push(action.user);
-				// const lightCountMap: LightCountMap = state.users[action.user.name];
-				// if (!lightCountMap) {
-				draft.users[action.user.name] = { };
-				// }
+				const identifier = action.user.id ? action.user.id.toString() : action.user.name;
+				draft.users[identifier] = { };
 			});
 		case 'selectUser':
 		 	return produce(state, (draft) => {

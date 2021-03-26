@@ -4,6 +4,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import { ActionTypes, LightAction, User } from './light_reducer';
+import { v4 as uuidv4 } from 'uuid';
 
 type Props = {
 	onClose: () => void;
@@ -30,6 +31,7 @@ export const NewUserModal = (props: Props) => {
 			birth_day: !isNaN(parseInt(day)) ? parseInt(day) : 0,
 			address,
 			comment,
+			id: uuidv4(),
 		};
 		dispatch({type: ActionTypes.addNewUser, user: user});
 		onClose();
