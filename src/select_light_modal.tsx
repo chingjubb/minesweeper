@@ -75,7 +75,7 @@ export const SelectLightModal = (props: Props) => {
 				open={open}
 				maxWidth="md"
 				fullWidth={false}>
-			<div style={{ height: 600, width: '800px', margin: 20 }}>
+			<div style={{ height: 600, width: 800, margin: 30 }}>
 				{showCheckBox &&
 					<div>
 						<Checkbox
@@ -133,44 +133,46 @@ type LightRowProps = {
 const LightRow = (props: LightRowProps) => {
 	const { light, count, onChange } = props;
 	return <TableRow key={light.name}>
-				<TableCell style={{width:100, position:'relative'}}>
-					<TextField style={{paddingLeft: 30, paddingRight: 32}}
-						label={''}
-						value={count} variant='outlined'
-						onChange={(e) => {
-							const number = parseInt(e.target.value);
-							if (isNaN(number) || number < 0) {
-								onChange(0);
-							} else {
-								onChange(number);
-							}
-						}}
-						size='small'
-					/>
-					<div onClick={() => {
-							onChange(count + 1);
-						 }} 
-						 style={{width: 30,
-								 height: 20,
-								 top: 34,
-								 right: 15,
-								 position: 'absolute',
-								 cursor: 'pointer'}}>
-						<AddCircleOutlineIcon />
+				<TableCell style={{width: 100, maxWidth: 160}}>
+					<div style={{display:'flex', justifyContent:'center', justifyItems:'center', width: 100, maxWidth: 160}}>
+						<div onClick={()=>{
+							 	if (count - 1 >= 0) {
+							 		onChange(count - 1);
+							 	}
+							 }}
+							 style={{display: 'flex',
+							 		justifyContent: 'center',
+							 		alignItems: 'center',
+							 		height: 40,
+									maxHeight: 40,
+									cursor: 'pointer'}}>
+							<RemoveCircleOutlineIcon />
+					 	</div>
+						<TextField style={{paddingLeft: 5, paddingRight: 5, minWidth: 40, maxWidth: 60 }}
+							label={''}
+							value={count} variant='outlined'
+							onChange={(e) => {
+								const number = parseInt(e.target.value);
+								if (isNaN(number) || number < 0) {
+									onChange(0);
+								} else {
+									onChange(number);
+								}
+							}}
+							size='small'
+						/>
+						<div onClick={() => {
+								onChange(count + 1);
+							 }} 
+							 style={{display: 'flex',
+							 		justifyContent: 'center',
+							 		alignItems: 'center',
+									height: 40,
+									maxHeight: 40,
+									cursor: 'pointer'}}>
+							<AddCircleOutlineIcon />
+						</div>
 					</div>
-					<div onClick={()=>{
-						 	if (count - 1 >= 0) {
-						 		onChange(count - 1);
-						 	}
-						 }}
-						 style={{width: 30,
-								 height: 20,
-								 top: 34,
-								 left: 15,
-								 position: 'absolute',
-								 cursor: 'pointer'}}>
-						<RemoveCircleOutlineIcon />
-				 	</div>
 				</TableCell>
 				<TableCell style={{width: 220}}>
 					{light.series} {light.name}<br/>
