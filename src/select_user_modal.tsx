@@ -69,16 +69,17 @@ export const SelectUserModal = (props: Props) => {
 						</TableHead>
 						<TableBody>
 							{allUsers.map((user: User) => {
-								const checked = selectedNameState.includes(user.name);
-								return <TableRow key={user.name + checked.toString()}>
-											<TableCell style={{width:'50px'}}>
+								const identifier = user.id ? user.id.toString() : user.name;
+								let checked = selectedNameState.includes(identifier);
+								return <TableRow key={identifier + checked.toString()}>
+											<TableCell style={{width: 50}}>
 												<Checkbox
 													checked={checked}
 													onChange={()=>{
 														if (checked) {
-															removeSelectedName(user.name);
+															removeSelectedName(identifier);
 														} else {
-															addSelectedName(user.name);
+															addSelectedName(identifier);
 														}
 													}}
 													color="default"

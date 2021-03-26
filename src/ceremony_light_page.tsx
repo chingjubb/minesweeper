@@ -21,7 +21,7 @@ import { FindMemberModal, Member } from './find_member_modal';
 type Props = {
 };
 
-const showFindMemberForm = false; // 內部員工才可以使用的ＦＯＲＭ
+const showFindMemberForm = true; // 內部員工才可以使用的ＦＯＲＭ
 const hasPayOnlineButton = false;
 
 export const CeremonyLightPage = (props: Props) => {
@@ -37,7 +37,7 @@ export const CeremonyLightPage = (props: Props) => {
 	const [state, dispatch] = useLightReducer(initialState);
 	const [showNewUserModal, setShowNewUserModal] = useState(false);
 	const [showSelectUserModal, setShowSelectUserModal] = useState(false);
-	const selectedNames = Object.keys(state.users);
+	const selectedIdentifiers = Object.keys(state.users);
 	const [isLoadingFindByPhone, setIsLoadingFindByPhone] = useState(false);
 	const [isLoadingFindByMemberName, setIsLoadingFindByMemberName] = useState(false);
 	const [isLoadingPayAtCounter, setIsLoadingPayAtCounter] = useState(false);
@@ -237,16 +237,16 @@ export const CeremonyLightPage = (props: Props) => {
 								  		   allCeremonies={state.allCeremonies} />;
 	}
 
-	const onSubmitSelectUserModal = (newSelectedNames: string[]) => {
-		newSelectedNames.forEach((name) => {
-			if (selectedNames.includes(name)) {
+	const onSubmitSelectUserModal = (newSelectedUserIdentifier: string[]) => {
+		newSelectedUserIdentifier.forEach((name) => {
+			if (selectedIdentifiers.includes(name)) {
 				// Do nothing
 			} else {
 				dispatch({ type: ActionTypes.selectUser, userName: name });
 			}
 		});
-		selectedNames.forEach((name) => {
-			if (newSelectedNames.includes(name)) {
+		selectedIdentifiers.forEach((name) => {
+			if (newSelectedUserIdentifier.includes(name)) {
 				// Do nothing
 			} else {
 				dispatch({ type: ActionTypes.removeUserFromLight, userName: name });
@@ -291,19 +291,22 @@ export const CeremonyLightPage = (props: Props) => {
 
 	const getSessionData = () => {
 		let data: string[] = [];
-		const userNames = Object.keys(state.users);
+		const identifiers = Object.keys(state.users);
 		const lightKingOr108Lights = state.L108 || state.Lking; // 是否點燈王或108燈
 		const lighting_locid = state.location.id;
 
-		userNames.forEach((userName: string) => {
-			const user = state.allUsers.find((u) => u.name === userName);
+		identifiers.forEach((identifier: string) => {
+			let user = state.allUsers.find((u) => u.id?.toString() === identifier);
+			if (!user) {
+				user = state.allUsers.find((u) => u.name === identifier);
+			}
 			if (user) {
-				const lightCountMap: LightCountMap | undefined = state.users[userName];
+				const lightCountMap: LightCountMap | undefined = state.users[identifier];
 				const num = getNumLightForUser(lightCountMap, state.allLights);
 				const comment = removeSpecialCharacters(user.comment ?? '');
 
 				if (num > 0 || lightKingOr108Lights) {
-					let data1 = `${userName}@${user.birth_cal}@${user.birth_year}@${user.birth_month}@${user.birth_day}@${user.address}@${lighting_locid}@${comment}@`
+					let data1 = `${user.name}@${user.birth_cal}@${user.birth_year}@${user.birth_month}@${user.birth_day}@${user.address}@${lighting_locid}@${comment}@`
 					const countData: string[] = [];
 					state.allLights.forEach((light: Light) => {
 						const count = lightCountMap ? (lightCountMap[light.name] ?? 0) : 0;
@@ -346,9 +349,9 @@ export const CeremonyLightPage = (props: Props) => {
 
 	const getTotalPrice = () => {
 		let total = 0;
-		const userNames = Object.keys(state.users);
-		userNames.forEach((userName: string) => {
-			const lightCountMap: LightCountMap | undefined = state.users[userName];
+		const identifiers = Object.keys(state.users);
+		identifiers.forEach((identifier: string) => {
+			const lightCountMap: LightCountMap | undefined = state.users[identifier];
 			if (lightCountMap) {
 				const subtotal = getSubTotal(lightCountMap, state.allLights);
 				total += subtotal;
@@ -363,9 +366,9 @@ export const CeremonyLightPage = (props: Props) => {
 	}
 	const getTotalNumLight = () => {
 		let totalCount = 0;
-		const userNames = Object.keys(state.users);
-		userNames.forEach((userName: string) => {
-			const lightCountMap: LightCountMap | undefined = state.users[userName];
+		const identifiers = Object.keys(state.users);
+		identifiers.forEach((identifier: string) => {
+			const lightCountMap: LightCountMap | undefined = state.users[identifier];
 			if (lightCountMap) {
 				const num = getNumLightForUser(lightCountMap, state.allLights);
 				totalCount += num;
@@ -420,7 +423,7 @@ export const CeremonyLightPage = (props: Props) => {
 							 	   Object.keys(state.users).length.toString()}
 							 allUsers={state.allUsers}
 							 onSubmit={onSubmitSelectUserModal}
-							 selectedNames={selectedNames}
+							 selectedNames={selectedIdentifiers}
 							 onClose={() => { setShowSelectUserModal(false) }} />
 
 			<CeremonyLightTable users={state.users}

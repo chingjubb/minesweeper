@@ -8,7 +8,7 @@ export type LightState = {
 	currentUserType?: number;
 	allUsers: User[];
 	allLights: Light[];
-	users: Map<string, LightCountMap>; // 法會燈的選擇 For ceremony: user name to a light count map
+	users: Map<string, LightCountMap>; // 法會燈的選擇 For ceremony: user name or id to a light count map
 	allLocations: Location[];
 	allCeremonies: Ceremony[];
 	location?: Location; // selected location
@@ -40,7 +40,7 @@ export type Ceremony = { // 法會，例如：南無 彌勒尊佛 佛誕日
 export type LightCountMap = Map<string, number>; // light name to number of light
 
 export type User = { // 點燈者
-	id?: number; // id from the backend
+	id?: number | string; // id from the backend
 	name: string;
 	birth_cal?: string | number; // 1 -> 國曆, 0 -> 農曆
 	birth_year?: string | number;
@@ -92,16 +92,16 @@ export type LightAction =
 	  }
 	| {
 			type: typeof ActionTypes.updateLightCountMapForUser;
-			userName: string;
+			userName: string; // identifier
 			lightCountMap: LightCountMap;
 	  }
 	| {
 			type: typeof ActionTypes.removeUserFromLight;
-			userName: string;
+			userName: string; // identifier
 	}
 	| {
 			type: typeof ActionTypes.selectUser;
-			userName: string;
+			userName: string; // user id as string or user name if they don't have id
 	}
 	| {
 			type: typeof ActionTypes.loadAllLights;
@@ -184,26 +184,29 @@ export const LightReducer = (
 			return produce(state, (draft) => {
 				console.log('addNewUser', action.user);
 				draft.allUsers.push(action.user);
-				const lightCountMap: LightCountMap = state.users[action.user.name];
-				if (!lightCountMap) {
-					draft.users[action.user.name] = { };
-				}
+				// const lightCountMap: LightCountMap = state.users[action.user.name];
+				// if (!lightCountMap) {
+				draft.users[action.user.name] = { };
+				// }
 			});
 		case 'selectUser':
 		 	return produce(state, (draft) => {
 				console.log('selectUser', action.userName);
-				const lightCountMap: LightCountMap = state.users[action.userName];
+				const identifier = action.userName;
+				const lightCountMap: LightCountMap = state.users[identifier];
 				if (!lightCountMap) {
-					draft.users[action.userName] = { };
+					draft.users[identifier] = { };
 				}
 			});
 		case 'updateLightCountMapForUser':
 			return produce(state, (draft) => {
-				draft.users[action.userName] = action.lightCountMap;
+				const identifier = action.userName;
+				draft.users[identifier] = action.lightCountMap;
 			});
 		case 'removeUserFromLight':
 			return produce(state, (draft) => {
-				delete draft.users[action.userName]
+				const identifier = action.userName;
+				delete draft.users[identifier]
 			});
 		case 'loadAllLights':
 			return produce(state, (draft) => {
@@ -231,11 +234,7 @@ export const LightReducer = (
 			return produce(state, (draft) => {
 				console.log('loadusers reducer', action.users);
 				action.users.forEach((user: User) => {
-					// Only load the user name that we don't have yet
-					const userExists = draft.allUsers.find((u: User) => user.name === u.name)
-					if (!userExists) {
-						draft.allUsers.push(user);
-					}
+					draft.allUsers.push(user);
 				});
 			});
 		// For year lights:

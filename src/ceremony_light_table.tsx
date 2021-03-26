@@ -43,9 +43,9 @@ export const CeremonyLightTable = (props: Props) => {
 			L108, Lking, family } = props;
 
 	let total = 0;
-	const userNames = Object.keys(users);
-	userNames.forEach((userName: string) => {
-		const lightCountMap: LightCountMap | undefined = users[userName];
+	const identifiers = Object.keys(users);
+	identifiers.forEach((identifier: string) => {
+		const lightCountMap: LightCountMap | undefined = users[identifier];
 		if (lightCountMap) {
 			const subtotal = getSubTotal(lightCountMap, allLights);
 			total += subtotal;
@@ -88,7 +88,7 @@ export const CeremonyLightTable = (props: Props) => {
 					顯示闔府
 				</span>
 			</div>
-			<TableContainer component={Paper} style={{ width: 1100 }}>
+			<TableContainer component={Paper} style={{ width: 1140 }}>
 				<Table aria-label="simple table">
 					<TableHead>
 						<TableRow style={{ backgroundColor: '#D8AA56' }}>
@@ -103,13 +103,16 @@ export const CeremonyLightTable = (props: Props) => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{Object.entries(users).map(([name, lightCountMap]) => {
-								const user = allUsers.find((u: User) => u.name === name);
+						{Object.entries(users).map(([identifier, lightCountMap]) => {
+								let user = allUsers.find((u: User) => u.id?.toString() === identifier);
+								if (!user) {
+									user = allUsers.find((u: User) => u.name === identifier);
+								}
 								if (!user) {
 									return;
 								}
 								return <Row user={user}
-											key={name}
+											key={identifier}
 											allLights={allLights}
 											dispatch={dispatch}
 											location={location}
@@ -168,8 +171,9 @@ const Row = (props: RowProps) => {
 	const subtotal = getSubTotal(lightCountMap, allLights);
 
 	const onSubmit = (lightCountMap: LightCountMap) => {
+		const identifier = user.id ? user.id.toString() : user.name
 		dispatch({type: ActionTypes.updateLightCountMapForUser,
-				  userName : user.name, 
+				  userName : identifier, 
 				  lightCountMap: lightCountMap});
 		setShowModal(false);
 	};
@@ -191,24 +195,25 @@ const Row = (props: RowProps) => {
 								style={{width:'60px', marginRight:'10px'}}>編輯</ColorButton>
 						<Button variant="contained"
 								onClick={() => {
+									const identifier = user.id ? user.id.toString() : user.name;
 									dispatch({ type: ActionTypes.removeUserFromLight,
-											   userName: user.name });
+											   userName: identifier });
 								}}
 								style={{width:'60px'}}>刪除</Button>
 					</div>
 				</TableCell>
 				<TableCell>
-					<div style={{ minWidth: 30, maxWidth: 60 }}>
+					<div style={{ minWidth: 30, maxWidth: 80 }}>
 						{user.name}
 					</div>
 				</TableCell>
 				<TableCell>
-					<div style={{ minWidth: 110 }}>
+					<div style={{ minWidth: 100 }}>
 						{userBirthdayString(user)}
 					</div>
 				</TableCell>
 				<TableCell>
-					<div style={{ minWidth: 150 }}>
+					<div style={{ minWidth: 140 }}>
 					{lightNames.map((lightName: string) => {
 						const theLight = allLights.find((light: Light) => light.name === lightName);
 						if (!theLight) {
