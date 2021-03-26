@@ -7,7 +7,6 @@ import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
-// import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 
 
@@ -32,7 +31,7 @@ export const FindMemberModal = (props: Props) => {
 				maxWidth="md"
 				fullWidth={false}>
 			<DialogTitle>選擇使用者</DialogTitle>
-			<div style={{ height: 600, margin:20 }}>
+			<div style={{ maxHeight: 600, margin:20 }}>
 				<TableContainer component={Paper} style={{width:600}}>
 					<Table aria-label="simple table">
 						<TableBody>

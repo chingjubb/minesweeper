@@ -58,7 +58,7 @@ export const CeremonyLightTable = (props: Props) => {
 		total = 200 * 108 * 12;
 	}
 	return (
-		<div style={{ width: 1100 }}>
+		<div style={{ width: 1120 }}>
 			<div style={{ textAlign: 'right' }}>
 				<Checkbox
 					checked={L108}
