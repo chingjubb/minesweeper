@@ -55,10 +55,10 @@ export const SelectUserModal = (props: Props) => {
 				open={open}
 				maxWidth="md"
 				fullWidth={false}>
-			<DialogTitle>選取點燈人</DialogTitle>
-			<div style={{ height: 600, margin:'20px' }}>
-				<TableContainer component={Paper} style={{width:'800px', marginBottom:'20px'}}>
-					<Table aria-label="simple table">
+			<div style={{ maxHeight: 600, margin: 30, marginTop: 10 }}>
+				<DialogTitle>選取點燈人</DialogTitle>
+				<TableContainer component={Paper} style={{width:800, marginBottom:20}}>
+					<Table>
 						<TableHead>
 							<TableRow style={{ backgroundColor: '#D8AA56' }}>
 								<TableCell></TableCell>
@@ -98,10 +98,10 @@ export const SelectUserModal = (props: Props) => {
 				<Button variant="contained"
 						color="primary"
 						onClick={onClick}
-						style={{width:'150px', marginRight:'20px', marginBottom: 20}}>確定</Button>
+						style={{width:150, marginRight:20, marginBottom: 20}}>確定</Button>
 				<Button variant="contained"
 						onClick={onCancel}
-						style={{width:'150px', marginBottom: 20}}>取消</Button>
+						style={{width:150, marginBottom: 20 }}>取消</Button>
 			</div>
 		</Dialog>
   );
