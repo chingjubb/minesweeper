@@ -21,8 +21,8 @@ import { FindMemberModal, Member } from './find_member_modal';
 type Props = {
 };
 
-const showFindMemberForm = true; // 內部員工才可以使用的ＦＯＲＭ
-const hasPayOnlineButton = false;
+const showFindMemberForm = false; // 內部員工才可以使用的ＦＯＲＭ
+const hasPayOnlineButton = true;
 
 export const CeremonyLightPage = (props: Props) => {
 	const initialState: LightState = { allUsers: [],
