@@ -21,3 +21,9 @@
 	text-align: center;
 	line-height: 30px;
 }
+
+.flagged {
+	background: yellow;
+	text-align: center;
+	line-height: 30px;
+}

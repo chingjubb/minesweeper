@@ -16,11 +16,17 @@ export type GameState = {
 
 export const ActionTypes = {
   clickTile: "clickTile",
+  setFlag: 'setFlag',
 } as const;
 
 export type GameAction =
   | {
       type: typeof ActionTypes.clickTile;
+      row: number;
+      column: number;
+    }
+  | {
+      type: typeof ActionTypes.setFlag;
       row: number;
       column: number;
     };
@@ -34,7 +40,7 @@ export const MineSweeperReducer = (
       return produce(state, draft => {
         const tile: Tile = draft.board[action.row][action.column];
         if (tile.flagged) {
-          tile.flagged = false;
+          // do nothing tile.flagged = false;
         } else if (tile.clicked) {
           // do nothing
         } else if (tile.isBomb) {
@@ -46,7 +52,16 @@ export const MineSweeperReducer = (
           clearBoardStartWith(draft.board, action.row, action.column);
         }
         draft.board[action.row][action.column] = tile;
-
+      });
+    case 'setFlag':
+      return produce(state, draft => {
+        const tile: Tile = draft.board[action.row][action.column];
+        if (tile.clicked) {
+          // do nothing
+        } else {
+          tile.flagged = !tile.flagged;
+        }
+        draft.board[action.row][action.column] = tile;
       });
     default:
       return state;

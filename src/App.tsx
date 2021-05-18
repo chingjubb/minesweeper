@@ -14,6 +14,11 @@ function App() {
 				{thisRow.map((tile: Tile, column: number) => {
 				return <Square {...tile}
 							   key={row + '' + column + '' + tile.clicked + '' + tile.flagged}
+							   onRightClick={() => {
+							   		dispatch({type: ActionTypes.setFlag,
+							   				  row,
+							   				  column})
+							   }}
 							   onClick={() => {
 							   		dispatch({type: ActionTypes.clickTile,
 							   				  row,
@@ -25,17 +30,28 @@ function App() {
 
 type SquareProps = {
 	onClick: () => void;
+	onRightClick: () => void;
 } & Tile;
 
 const Square = (props: SquareProps) => {
-	const { isBomb, flagged, clicked, onClick, value } = props;
+	const { isBomb, flagged, clicked, onClick, value, onRightClick } = props;
+	if (flagged) {
+		return <div onContextMenu={(e) => {
+						e.preventDefault();
+						onRightClick();
+					}}
+					onClick={onClick}
+					className={classnames(styles.tile, styles.flagged)}>{'🚩'}</div>
+	}
+
 	if (!clicked) {
 		return <div onClick={onClick}
+					onContextMenu={(e) => {
+						e.preventDefault();
+						onRightClick();
+					}}
 					className={classnames(styles.tile,
 										  styles.unclickedTile)} />
-	}
-	if (flagged) {
-		return <div>F</div>
 	}
 	
 	if (isBomb) {
