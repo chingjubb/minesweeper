@@ -14,9 +14,11 @@ function App() {
 				{thisRow.map((tile: Tile, column: number) => {
 				return <Square {...tile}
 							   key={row + '' + column + '' + tile.clicked + '' + tile.flagged}
-							   onClick={() => dispatch({type: ActionTypes.clickTile,
-							   							row,
-							   							column})}/>
+							   onClick={() => {
+							   		dispatch({type: ActionTypes.clickTile,
+							   				  row,
+							   				  column})}
+							}/>
 		})}</div>
 	})}</div>;
 }
