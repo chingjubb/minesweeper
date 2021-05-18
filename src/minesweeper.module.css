@@ -27,3 +27,34 @@
 	text-align: center;
 	line-height: 30px;
 }
+
+.oneBomb {
+	color: blue;
+}
+.twoBombs {
+	color: green;	
+}
+
+.threeBombs {
+	color: red;
+}
+
+.fourBombs {
+	color: purple;
+}
+
+.fiveBombs {
+	color: brown;
+}
+
+.sixBombs {
+	color: orange;
+}
+
+.sevenBombs {
+	color: gray;
+}
+
+.eightBombs {
+	color: purple;
+}

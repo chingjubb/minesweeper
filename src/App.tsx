@@ -6,7 +6,7 @@ import styles from './minesweeper.module.css';
 import classnames from 'classnames';
 
 function App() {
-	const [config, dispatch] = useMineSweeperReducer({ board: initializeBoard(10, 10, 15) });	
+	const [config, dispatch] = useMineSweeperReducer({ board: initializeBoard(14, 18, 40) });	
 	const board: Tile[][] = config.board;
 
 	return <div>{board.map((thisRow: Tile[], row: number) => {
@@ -41,7 +41,7 @@ const Square = (props: SquareProps) => {
 						onRightClick();
 					}}
 					onClick={onClick}
-					className={classnames(styles.tile, styles.flagged)}>{'🚩'}</div>
+					className={classnames(styles.tile, styles.flagged)}>{'🏁'}</div>
 	}
 
 	if (!clicked) {
@@ -60,9 +60,22 @@ const Square = (props: SquareProps) => {
 					{'💣'}
 				</div>
 	}
-
+	const getValueStyle = (value: number) => {
+		switch (value) {
+			case 1: return styles.oneBomb;
+			case 2: return styles.twoBombs;
+			case 3: return styles.threeBombs;
+			case 4: return styles.fourBombs;
+			case 5: return styles.fiveBombs;
+			case 6: return styles.sixBombs;
+			case 7: return styles.sevenBombs;
+			case 8: return styles.eightBombs;
+			default:
+				return '';
+		}
+	}
 	return <div className={classnames(styles.clickedTile,
-								      styles.tile)}>
+								      styles.tile, getValueStyle(value))}>
 				{value > 0 ? value : ''}
 			</div>
 }
