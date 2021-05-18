@@ -1,0 +1,23 @@
+
+.tile {
+	width: 30px;
+	height: 30px;
+	border: 1px solid gray;
+}
+
+.unclickedTile {
+	background: yellow;
+	cursor: pointer;
+}
+
+.clickedTile {
+	background: white;
+	text-align: center;
+	line-height: 30px;
+}
+
+.bomb {
+	background: white;
+	text-align: center;
+	line-height: 30px;
+}

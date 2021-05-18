@@ -1,48 +1,52 @@
-// import "./App.css";
-
-type Tile = {
-	isBomb: boolean;
-	row: number;
-	column: number;
-	clicked: boolean;
-	flagged: boolean;
-}
+import { Tile,
+		 initializeBoard,
+		 useMineSweeperReducer,
+		 ActionTypes } from './minesweeper_reducer';
+import styles from './minesweeper.module.css';
+import classnames from 'classnames';
 
 function App() {
-	const numRow = 10;
-	const numColumn = 10;
-	const numBombs = 10;
+	const [config, dispatch] = useMineSweeperReducer({ board: initializeBoard(10, 10, 15) });	
+	const board: Tile[][] = config.board;
 
-	// init the board
-	const board: Tile[][] = [];
-	for (let i = 0; i < numRow; i++) {
-		const thisRow: Tile[] = [];
-		for (let j = 0; j < numColumn; j++) {
-			thisRow[j] = { isBomb: false, row: i, column: j, clicked: false, flagged: false }; 
-		}
-		board.push(thisRow);
+	return <div>{board.map((thisRow: Tile[], row: number) => {
+		return <div key={row} style={{display: 'flex'}}>
+				{thisRow.map((tile: Tile, column: number) => {
+				return <Square {...tile}
+							   key={row + '' + column + '' + tile.clicked + '' + tile.flagged}
+							   onClick={() => dispatch({type: ActionTypes.clickTile,
+							   							row,
+							   							column})}/>
+		})}</div>
+	})}</div>;
+}
+
+type SquareProps = {
+	onClick: () => void;
+} & Tile;
+
+const Square = (props: SquareProps) => {
+	const { isBomb, flagged, clicked, onClick, value } = props;
+	if (!clicked) {
+		return <div onClick={onClick}
+					className={classnames(styles.tile,
+										  styles.unclickedTile)} />
 	}
-
-	// Set bombs to random column and row
-	let numBombSet = 0;
-	while (numBombSet < numBombs) {
-		const randomRow = Math.floor(Math.random() * numRow);
-		const randomColumn = Math.floor(Math.random() * numColumn);
-		if (!board[randomRow][randomColumn].isBomb) {
-			board[randomRow][randomColumn].isBomb = true;
-			numBombSet++;
-		}
+	if (flagged) {
+		return <div>F</div>
 	}
 	
-	console.log('board', board);
-	return <div>Mine sweeper</div>;
+	if (isBomb) {
+		return <div className={classnames(styles.bomb,
+										  styles.tile)}>
+					{'💣'}
+				</div>
+	}
+
+	return <div className={classnames(styles.clickedTile,
+								      styles.tile)}>
+				{value > 0 ? value : ''}
+			</div>
 }
-
-const Square = (props: Tile) => {
-	const { isBomb, row, column, clicked, flagged } = props;
-
-	return <div>{isBomb}</div>
-}
-
 
 export default App;
