@@ -41,6 +41,11 @@ export const MineSweeperReducer = (
     case "clickTile":
       return produce(state, draft => {
         const tile: Tile = draft.board[action.row][action.column];
+        if (!state.isStarted && tile.isBomb) {
+          // The first click can't be a bomb
+          // Need to swap with another clean tile
+          swapWithAnotherTile(draft.board, action.row, action.column)
+        }
         if (tile.flagged) {
           // do nothing
         } else if (tile.clicked) {
@@ -53,6 +58,7 @@ export const MineSweeperReducer = (
           // calculate number of bombs next to it
           clearBoardStartWith(draft.board, action.row, action.column);
         }
+        draft.isStarted = true;
         draft.board[action.row][action.column] = tile;
       });
     case 'setFlag':
@@ -69,6 +75,25 @@ export const MineSweeperReducer = (
       return state;
   }
 };
+
+const swapWithAnotherTile = (board, row, column) => {
+  let swapped = false;
+  const tile = board[row][column];
+  const numRows = board.length;
+  const numColumns = board[0].length;
+  while (!swapped) {
+    const row2 = Math.floor(Math.random() * numRows);
+    const column2 = Math.floor(Math.random() * numColumns);
+    const anotherTile = board[row2][column2];
+    if (!anotherTile.isBomb) {
+      console.log('swap!!');
+      anotherTile.isBomb = true;
+      tile.isBomb = false;
+      swapped = true;
+    }
+  }
+  calculateValue(board, numRows, numColumns);
+}
 
 const clearBoardStartWith = (board, row, column) => {
   if (!board[row]?.[column]) return;
@@ -124,6 +149,12 @@ export const initializeBoard = (numRow, numColumn, numBombs) => {
   }
 
   // Calculate number of bombs 
+  calculateValue(board, numRow, numColumn);
+  return board;
+}
+
+const calculateValue = (board, numRow, numColumn) => {
+  // Calculate number of bombs 
   for (let i = 0; i < numRow; i++) {
     for (let j = 0; j < numColumn; j++) {
       let value = 0;
@@ -138,5 +169,5 @@ export const initializeBoard = (numRow, numColumn, numBombs) => {
       board[i][j].value = value;
     }
   }
-  return board;
 }
+
