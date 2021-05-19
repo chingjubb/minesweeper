@@ -62,3 +62,11 @@
 .eightBombs {
 	color: purple;
 }
+
+.gameOverText {
+	cursor: pointer;
+}
+
+.gameBoard {
+	display: flex;
+}

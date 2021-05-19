@@ -37,14 +37,14 @@ function App() {
 	};
 
 	const renderGameOverText = () => {
-		return (<div style={{cursor: 'pointer'}}
+		return (<div className={styles.gameOverText}
 					onClick={() => {
 						dispatch({ type: ActionTypes.restartGame }) }}>
-				Game over! Click to restart.
+				Game over! Click here to restart.
 				</div>);
 	};
 
-	return (<div style={{display: 'flex'}}>
+	return (<div className={styles.gameBoard}>
 				<div>{renderBoard()}</div>
 				{!isAlive && renderGameOverText()}
 			</div>);

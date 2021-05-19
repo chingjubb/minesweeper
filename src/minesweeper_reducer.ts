@@ -48,8 +48,12 @@ export const MineSweeperReducer = (
   switch (action.type) {
     case "clickTile":
       return produce(state, draft => {
+        if (!state.isAlive) return;
         const tile: Tile = draft.board[action.row][action.column];
-        if (!state.isStarted && tile.isBomb) {
+        if (!state.isStarted
+            && tile.isBomb
+            && (state.board.length > 1
+            || state.board[0].length > 1)) {
           // The first click can't be a bomb
           // Need to swap with another clean tile
           swapWithAnotherTile(draft.board, action.row, action.column)
@@ -77,6 +81,7 @@ export const MineSweeperReducer = (
         } else {
           tile.flagged = !tile.flagged;
         }
+        draft.isStarted = true;
         draft.board[action.row][action.column] = tile;
       });
     case 'restartGame':
