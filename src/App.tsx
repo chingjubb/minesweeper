@@ -1,9 +1,12 @@
+import { Dispatch } from 'react';
 import { Tile,
 		 initializeBoard,
 		 useMineSweeperReducer,
 		 NUM_BOMBS,
 		 NUM_COLUMN,
 		 NUM_ROW,
+		 GameState,
+		 GameAction,
 		 ActionTypes } from './minesweeper_reducer';
 import styles from './minesweeper.module.css';
 import classnames from 'classnames';
@@ -12,9 +15,18 @@ function App() {
 	const [config, dispatch] = useMineSweeperReducer({
 									board: initializeBoard(NUM_ROW, NUM_COLUMN, NUM_BOMBS),
 									isStarted: false,
-									isAlive: true });	
-	const board: Tile[][] = config.board;
-	const isAlive: boolean = config.isAlive;
+									isAlive: true });
+	return <Game dispatch={dispatch} gameState={config}/>
+};
+
+type GameProps = {
+	gameState: GameState;
+	dispatch: Dispatch<GameAction>;
+};
+
+export const Game = ({ gameState, dispatch }: GameProps) => {
+	const board: Tile[][] = gameState.board;
+	const isAlive: boolean = gameState.isAlive;
 
 	const renderBoard = () => {
 		return <div>{board.map((thisRow: Tile[], row: number) => {
@@ -32,15 +44,15 @@ function App() {
 							   				  row,
 							   				  column})}
 							}/>
-			})}</div>
-		})}</div>;
+					})}</div>
+				})}</div>;
 	};
 
 	const renderGameOverText = () => {
 		return (<div className={styles.gameOverText}
 					onClick={() => {
 						dispatch({ type: ActionTypes.restartGame }) }}>
-				Game over! Click here to restart.
+					Game over! Click here to restart.
 				</div>);
 	};
 
@@ -48,7 +60,7 @@ function App() {
 				<div>{renderBoard()}</div>
 				{!isAlive && renderGameOverText()}
 			</div>);
-};
+}
 
 type SquareProps = {
 	onClick: () => void;
