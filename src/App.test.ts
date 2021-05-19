@@ -28,7 +28,32 @@ describe('MineSweeperReducer', () => {
 			expect(nextState.isStarted).toEqual(true);
 			expect(nextState.board[1][0].clicked).toEqual(true);
 		});
-	})
+
+		it('click on a bomb should set isAlive to false', () => {
+			const state: GameState = { board,
+									   isAlive: true,
+									   isStarted: false };
+			let nextState: GameState = MineSweeperReducer(state,
+				{ type: ActionTypes.clickTile, row: 0, column: 0});
+			nextState = MineSweeperReducer(nextState,
+				{ type: ActionTypes.clickTile, row: 1, column: 0});
+			expect(nextState.isAlive).toEqual(false);
+		});
+
+		it('click on a flagged tile should be safe if it is a bomb', () => {
+			const state: GameState = { board,
+									   isAlive: true,
+									   isStarted: false };
+			let nextState: GameState = MineSweeperReducer(state,
+				{ type: ActionTypes.clickTile, row: 1, column: 0});
+			nextState = MineSweeperReducer(nextState,
+				{ type: ActionTypes.setFlag, row: 0, column: 0});
+			nextState = MineSweeperReducer(nextState,
+				{ type: ActionTypes.clickTile, row: 0, column: 0});
+			expect(nextState.isAlive).toEqual(true);
+		});
+	});
+
 	describe(ActionTypes.setFlag, () => {
 		it('should set flagged to true to a tile', () => {
 			const state: GameState = { board,
@@ -51,5 +76,5 @@ describe('MineSweeperReducer', () => {
 				{ type: ActionTypes.setFlag, row: 0, column: 0});
 			expect(nextState.board[0][0].flagged).toEqual(false);
 		});
-	})
+	});
 });
