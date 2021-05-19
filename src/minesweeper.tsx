@@ -2,6 +2,9 @@ import { Dispatch } from 'react';
 import { Tile,
 		 GameState,
 		 GameAction,
+		 NUM_BOMBS,
+		 NUM_COLUMN,
+		 NUM_ROW,
 		 ActionTypes } from './minesweeper_reducer';
 import styles from './minesweeper.module.css';
 import { Square } from './square';
@@ -38,7 +41,10 @@ export const Minesweeper = ({ gameState, dispatch }: MinesweeperProps) => {
 	const renderGameOverText = () => {
 		return (<div className={styles.gameOverText}
 					onClick={() => {
-						dispatch({ type: ActionTypes.restartGame }) }}>
+						dispatch({ type: ActionTypes.restartGame,
+									numRows: NUM_ROW,
+									numColumns: NUM_COLUMN,
+									numBombs: NUM_BOMBS }) }}>
 					Game over! Click here to restart.
 				</div>);
 	};

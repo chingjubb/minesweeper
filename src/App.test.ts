@@ -77,4 +77,18 @@ describe('MineSweeperReducer', () => {
 			expect(nextState.board[0][0].flagged).toEqual(false);
 		});
 	});
+
+	describe(ActionTypes.restartGame, () => {
+		it('should restart the game', () => {
+			const state: GameState = { board,
+									   isAlive: false,
+									   isStarted: true };
+			const nextState: GameState = MineSweeperReducer(state,
+				{ type: ActionTypes.restartGame, numRows: 10, numColumns: 10, numBombs: 10});
+			expect(nextState.isAlive).toEqual(true);
+			expect(nextState.isStarted).toEqual(false);
+			expect(nextState.board.length).toEqual(10);
+			expect(nextState.board[0].length).toEqual(10);
+		});
+	});
 });

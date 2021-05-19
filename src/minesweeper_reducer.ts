@@ -39,6 +39,9 @@ export type GameAction =
     }
   | {
       type: typeof ActionTypes.restartGame;
+      numRows: number;
+      numColumns: number;
+      numBombs: number;
     };
 
 export const MineSweeperReducer = (
@@ -86,8 +89,8 @@ export const MineSweeperReducer = (
       });
     case 'restartGame':
       return produce(state, draft => {
-        draft.board = initializeBoard(NUM_ROW, NUM_COLUMN, NUM_BOMBS);
-        calculateValue(draft.board, NUM_ROW, NUM_COLUMN);
+        draft.board = initializeBoard(action.numRows, action.numColumns, action.numBombs);
+        calculateValue(draft.board, action.numRows, action.numColumns);
         draft.isAlive = true;
         draft.isStarted = false;
       });
@@ -106,7 +109,6 @@ const swapWithAnotherTile = (board, row, column) => {
     const column2 = Math.floor(Math.random() * numColumns);
     const anotherTile = board[row2][column2];
     if (!anotherTile.isBomb) {
-      console.log('swap!!');
       anotherTile.isBomb = true;
       tile.isBomb = false;
       swapped = true;
