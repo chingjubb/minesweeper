@@ -1,5 +1,5 @@
 import { Tile } from './minesweeper_reducer';
-import styles from './minesweeper.module.css';
+import styles from './square.module.css';
 import classnames from 'classnames';
 
 type SquareProps = {
