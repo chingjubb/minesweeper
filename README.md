@@ -1,6 +1,16 @@
 # Mine Sweeper Game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+After cloning this repo, switch to minesweeper branch:
+
+`git checkout minesweeper`
+
+`npm install`
+
+`npm run start`
+
+open http://localhost:3000/ in your browser
+
+`npm run test` to run tests
 
 ## Available Scripts
 
