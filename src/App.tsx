@@ -1,13 +1,16 @@
 import { Tile,
 		 initializeBoard,
 		 useMineSweeperReducer,
+		 NUM_BOMBS,
+		 NUM_COLUMN,
+		 NUM_ROW,
 		 ActionTypes } from './minesweeper_reducer';
 import styles from './minesweeper.module.css';
 import classnames from 'classnames';
 
 function App() {
 	const [config, dispatch] = useMineSweeperReducer({
-									board: initializeBoard(14, 18, 40),
+									board: initializeBoard(NUM_ROW, NUM_COLUMN, NUM_BOMBS),
 									isStarted: false,
 									isAlive: true });	
 	const board: Tile[][] = config.board;
@@ -31,10 +34,19 @@ function App() {
 							}/>
 			})}</div>
 		})}</div>;
-	}
+	};
+
+	const renderGameOverText = () => {
+		return (<div style={{cursor: 'pointer'}}
+					onClick={() => {
+						dispatch({ type: ActionTypes.restartGame }) }}>
+				Game over! Click to restart.
+				</div>);
+	};
+
 	return (<div style={{display: 'flex'}}>
 				<div>{renderBoard()}</div>
-				{!isAlive && <div>Game over!</div>}
+				{!isAlive && renderGameOverText()}
 			</div>);
 };
 

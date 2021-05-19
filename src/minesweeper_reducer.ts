@@ -1,6 +1,10 @@
 import { useReducer, Dispatch } from "react";
 import { produce } from "immer";
 
+export const NUM_ROW = 14;
+export const NUM_COLUMN = 18;
+export const NUM_BOMBS = 40;
+
 export type Tile = {
   isBomb: boolean;
   row: number;
@@ -19,6 +23,7 @@ export type GameState = {
 export const ActionTypes = {
   clickTile: "clickTile",
   setFlag: 'setFlag',
+  restartGame: 'restartGame',
 } as const;
 
 export type GameAction =
@@ -31,6 +36,9 @@ export type GameAction =
       type: typeof ActionTypes.setFlag;
       row: number;
       column: number;
+    }
+  | {
+      type: typeof ActionTypes.restartGame;
     };
 
 export const MineSweeperReducer = (
@@ -70,6 +78,13 @@ export const MineSweeperReducer = (
           tile.flagged = !tile.flagged;
         }
         draft.board[action.row][action.column] = tile;
+      });
+    case 'restartGame':
+      return produce(state, draft => {
+        draft.board = initializeBoard(NUM_ROW, NUM_COLUMN, NUM_BOMBS);
+        calculateValue(draft.board, NUM_ROW, NUM_COLUMN);
+        draft.isAlive = true;
+        draft.isStarted = false;
       });
     default:
       return state;
