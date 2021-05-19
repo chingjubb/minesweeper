@@ -6,14 +6,19 @@ import styles from './minesweeper.module.css';
 import classnames from 'classnames';
 
 function App() {
-	const [config, dispatch] = useMineSweeperReducer({ board: initializeBoard(14, 18, 40) });	
+	const [config, dispatch] = useMineSweeperReducer({
+									board: initializeBoard(14, 18, 40),
+									isStarted: false,
+									isAlive: true });	
 	const board: Tile[][] = config.board;
+	const isAlive: boolean = config.isAlive;
 
-	return <div>{board.map((thisRow: Tile[], row: number) => {
-		return <div key={row} style={{display: 'flex'}}>
+	const renderBoard = () => {
+		return <div>{board.map((thisRow: Tile[], row: number) => {
+		return <div key={row} className={styles.row}>
 				{thisRow.map((tile: Tile, column: number) => {
 				return <Square {...tile}
-							   key={row + '' + column + '' + tile.clicked + '' + tile.flagged}
+							   key={`${row}.${column}.${tile.clicked}.${tile.flagged}`}
 							   onRightClick={() => {
 							   		dispatch({type: ActionTypes.setFlag,
 							   				  row,
@@ -24,9 +29,14 @@ function App() {
 							   				  row,
 							   				  column})}
 							}/>
-		})}</div>
-	})}</div>;
-}
+			})}</div>
+		})}</div>;
+	}
+	return (<div style={{display: 'flex'}}>
+				<div>{renderBoard()}</div>
+				{!isAlive && <div>Game over!</div>}
+			</div>);
+};
 
 type SquareProps = {
 	onClick: () => void;

@@ -12,6 +12,8 @@ export type Tile = {
 
 export type GameState = {
   board: Tile[][];
+  isStarted: boolean; // false means game has not started
+  isAlive: boolean; // false means game over
 };
 
 export const ActionTypes = {
@@ -40,13 +42,13 @@ export const MineSweeperReducer = (
       return produce(state, draft => {
         const tile: Tile = draft.board[action.row][action.column];
         if (tile.flagged) {
-          // do nothing tile.flagged = false;
+          // do nothing
         } else if (tile.clicked) {
           // do nothing
         } else if (tile.isBomb) {
           // show game over screen
           tile.clicked = true;
-          console.log('game over!');
+          draft.isAlive = false;
         } else {
           // calculate number of bombs next to it
           clearBoardStartWith(draft.board, action.row, action.column);

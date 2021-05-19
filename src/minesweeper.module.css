@@ -28,6 +28,10 @@
 	line-height: 30px;
 }
 
+.row {
+	display: flex;
+}
+
 .oneBomb {
 	color: blue;
 }
