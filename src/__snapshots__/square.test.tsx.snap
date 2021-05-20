@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Bomb tile 1`] = `
+<div
+  className="bomb tile"
+>
+  💣
+</div>
+`;
+
+exports[`clicked tile  clicked tile value = 0 1`] = `
+<div
+  className="clickedTile tile"
+>
+  
+</div>
+`;
+
+exports[`clicked tile  clicked tile value = 1 1`] = `
+<div
+  className="clickedTile tile oneBomb"
+>
+  1
+</div>
+`;
+
+exports[`clicked tile  clicked tile value = 2 1`] = `
+<div
+  className="clickedTile tile twoBombs"
+>
+  2
+</div>
+`;
+
+exports[`clicked tile  clicked tile value = 3 1`] = `
+<div
+  className="clickedTile tile threeBombs"
+>
+  3
+</div>
+`;
+
+exports[`clicked tile  clicked tile value = 4 1`] = `
+<div
+  className="clickedTile tile fourBombs"
+>
+  4
+</div>
+`;
+
+exports[`clicked tile  clicked tile value = 5 1`] = `
+<div
+  className="clickedTile tile fiveBombs"
+>
+  5
+</div>
+`;
+
+exports[`clicked tile  clicked tile value = 6 1`] = `
+<div
+  className="clickedTile tile sixBombs"
+>
+  6
+</div>
+`;
+
+exports[`clicked tile  clicked tile value = 7 1`] = `
+<div
+  className="clickedTile tile sevenBombs"
+>
+  7
+</div>
+`;
+
+exports[`clicked tile  clicked tile value = 8 1`] = `
+<div
+  className="clickedTile tile eightBombs"
+>
+  8
+</div>
+`;
+
+exports[`flagged tile 1`] = `
+<div
+  className="tile flagged"
+  onClick={[Function]}
+  onContextMenu={[Function]}
+>
+  🚩
+</div>
+`;
+
+exports[`unclicked tile 1`] = `
+<div
+  className="tile unclickedTile"
+  onClick={[Function]}
+  onContextMenu={[Function]}
+/>
+`;
