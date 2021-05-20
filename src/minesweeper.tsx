@@ -7,7 +7,7 @@ import { Tile,
 		 NUM_ROW,
 		 ActionTypes } from './minesweeper_reducer';
 import styles from './minesweeper.module.css';
-import { Square } from './square';
+import { Square, BOMB_ICON, FLAG_ICON } from './square';
 import Button from '@material-ui/core/Button';
 
 type MinesweeperProps = {
@@ -18,7 +18,15 @@ type MinesweeperProps = {
 export const Minesweeper = ({ gameState, dispatch }: MinesweeperProps) => {
 	const board: Tile[][] = gameState.board;
 	const isAlive: boolean = gameState.isAlive;
-	const hasWon: boolean = gameState.numBombs === gameState.correctFlagged && gameState.wrongFlagged === 0;
+	const hasWon: boolean = gameState.numBombs === gameState.correctFlagged
+							&& gameState.wrongFlagged === 0;
+
+	const renderStates = () => {
+		return (<div className={styles.gameStates}>
+				  <div>{BOMB_ICON}: {gameState.numBombs}</div>
+				  <div>{FLAG_ICON}: {gameState.correctFlagged + gameState.wrongFlagged}</div>
+				</div>)
+	};
 
 	const renderBoard = () => {
 		return <div>{board.map((thisRow: Tile[], row: number) => {
@@ -55,6 +63,7 @@ export const Minesweeper = ({ gameState, dispatch }: MinesweeperProps) => {
 
 	return (<div className={styles.gameBoard}>
 				<div>{renderBoard()}</div>
+				{renderStates()}
 				{hasWon && <div><div>You Won!</div>{restartGameButton()}</div>}
 				{!isAlive && <div><div>Game Over!</div>{restartGameButton()}</div>}
 			</div>);

@@ -7,6 +7,9 @@ type SquareProps = {
 	onRightClick: () => void;
 } & Tile;
 
+export const BOMB_ICON = '💣';
+export const FLAG_ICON = '🚩';
+
 export const Square = (props: SquareProps) => {
 	const { isBomb, flagged, clicked, onClick, value, onRightClick } = props;
 	if (flagged) {
@@ -15,7 +18,7 @@ export const Square = (props: SquareProps) => {
 						onRightClick();
 					}}
 					onClick={onClick}
-					className={classnames(styles.tile, styles.flagged)}>{'🚩'}</div>
+					className={classnames(styles.tile, styles.flagged)}>{FLAG_ICON}</div>
 	}
 
 	if (!clicked) {
@@ -31,7 +34,7 @@ export const Square = (props: SquareProps) => {
 	if (isBomb) {
 		return <div className={classnames(styles.bomb,
 										  styles.tile)}>
-					{'💣'}
+					{BOMB_ICON}
 				</div>
 	}
 	const getValueStyle = (value: number) => {
