@@ -21,7 +21,7 @@ export const Minesweeper = ({ gameState, dispatch }: MinesweeperProps) => {
 	const hasWon: boolean = gameState.numBombs === gameState.correctFlagged
 							&& gameState.wrongFlagged === 0;
 
-	const renderStates = () => {
+	const renderGameStates = () => {
 		return (<div className={styles.gameStates}>
 				  <div>{BOMB_ICON}: {gameState.numBombs}</div>
 				  <div>{FLAG_ICON}: {gameState.correctFlagged + gameState.wrongFlagged}</div>
@@ -63,7 +63,7 @@ export const Minesweeper = ({ gameState, dispatch }: MinesweeperProps) => {
 
 	return (<div className={styles.gameBoard}>
 				<div>{renderBoard()}</div>
-				{renderStates()}
+				{renderGameStates()}
 				{hasWon && <div><div>You Won!</div>{restartGameButton()}</div>}
 				{!isAlive && <div><div>Game Over!</div>{restartGameButton()}</div>}
 			</div>);
