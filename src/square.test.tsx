@@ -1,8 +1,5 @@
 import renderer from 'react-test-renderer';
 import { Square } from './square';
-import { Tile,
-		 GameState,
-		} from './minesweeper_reducer';
 
 test('unclicked tile', () => {
  	const component = renderer.create(
