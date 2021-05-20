@@ -32,11 +32,11 @@ The main thing in the `Minesweeper` component is a 2D array, the board.
 We render element in this 2D array as a `Square` component.
 
 The game state and logic is written in minesweeper_reducer.tsx. 
-Each time the user clicks on a Square or right click to flag a Square, we dispatch an event to the reducer and update the game state.
+Each time the user clicks on a Square or right clicks to flag a Square, we dispatch an event to the reducer and update the game state.
 
 The game goes on until we reach a win or lose condition.
 We win by flagging all the bombs correctly.
 We lose by clicking on any bomb.
 
-After winning or losing, user can click on 'Restart Game' button to restart the game.
+After winning or losing, user can click 'Restart Game' button to restart the game.
 
