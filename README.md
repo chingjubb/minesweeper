@@ -9,7 +9,7 @@ After cloning this repo, switch to minesweeper branch:
 
 `npm run start`
 
-open http://localhost:3000/ in your browser
+open http://localhost:3000/ in your browser to start playing the game
 
 `npm run test` to run tests
 
