@@ -16,9 +16,13 @@ open http://localhost:3000/ in your browser
 ## Description:
 
 The Minesweeper game is composed of 4 types of source files:
+
 (1) React component files, for example: `App.tsx`, `minesweeper.tsx`, `square.tsx`
+
 (2) Module CSS files: for example: `minsweeper.module.css`, `square.module.css`
+
 (3) Reducer file, for example: `minesweeper_reducer.tsx`
+
 (4) Test files: `minesweeper_reducer.test.ts`, `minesweeper.test.tsx`, `square.test.tsx`,
 there are regular tests and snapshot tests.
 
