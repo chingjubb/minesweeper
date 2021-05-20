@@ -40,3 +40,10 @@ We lose by clicking on any bomb.
 
 After winning or losing, user can click 'Restart Game' button to restart the game.
 
+
+## Part 3, Counting 7s
+The file is `count_seven.ts` and `count_seven.test.ts`
+
+`npm run test` to run tests.
+
+
