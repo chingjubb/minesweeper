@@ -15,7 +15,7 @@ export const Square = (props: SquareProps) => {
 						onRightClick();
 					}}
 					onClick={onClick}
-					className={classnames(styles.tile, styles.flagged)}>{'🏁'}</div>
+					className={classnames(styles.tile, styles.flagged)}>{'🚩'}</div>
 	}
 
 	if (!clicked) {

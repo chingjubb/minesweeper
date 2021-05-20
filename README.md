@@ -1,5 +1,6 @@
 # Mine Sweeper Game
 
+## Instructions
 After cloning this repo, switch to minesweeper branch:
 
 `git checkout minesweeper`

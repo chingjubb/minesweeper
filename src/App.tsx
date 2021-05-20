@@ -9,6 +9,9 @@ function App() {
 	const [config, dispatch] = useMineSweeperReducer({
 									board: initializeBoard(NUM_ROW, NUM_COLUMN, NUM_BOMBS),
 									isStarted: false,
+									numBombs: NUM_BOMBS,
+									correctFlagged: 0,
+									wrongFlagged: 0,
 									isAlive: true });
 	return <Minesweeper dispatch={dispatch} gameState={config}/>
 };

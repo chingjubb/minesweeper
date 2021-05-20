@@ -1,9 +1,9 @@
 import { useReducer, Dispatch } from "react";
 import { produce } from "immer";
 
-export const NUM_ROW = 14;
-export const NUM_COLUMN = 18;
-export const NUM_BOMBS = 40;
+export const NUM_ROW = 5;
+export const NUM_COLUMN = 5;
+export const NUM_BOMBS = 1;
 
 export type Tile = {
   isBomb: boolean;
@@ -18,6 +18,9 @@ export type GameState = {
   board: Tile[][];
   isStarted: boolean; // false means game has not started
   isAlive: boolean; // false means game over
+  numBombs: number;
+  correctFlagged: number;
+  wrongFlagged: number;
 };
 
 export const ActionTypes = {
@@ -53,10 +56,7 @@ export const MineSweeperReducer = (
       return produce(state, draft => {
         if (!state.isAlive) return;
         const tile: Tile = draft.board[action.row][action.column];
-        if (!state.isStarted
-            && tile.isBomb
-            && (state.board.length > 1
-            || state.board[0].length > 1)) {
+        if (!state.isStarted && tile.isBomb) {
           // The first click can't be a bomb
           // Need to swap with another clean tile
           swapWithAnotherTile(draft.board, action.row, action.column)
@@ -83,6 +83,15 @@ export const MineSweeperReducer = (
           // do nothing
         } else {
           tile.flagged = !tile.flagged;
+          if (tile.isBomb && tile.flagged) {
+            draft.correctFlagged++;
+          } else if (tile.isBomb && !tile.flagged) {
+            draft.correctFlagged--;
+          } else if (!tile.isBomb && tile.flagged) {
+            draft.wrongFlagged++;
+          } else if (!tile.isBomb && !tile.flagged) {
+            draft.wrongFlagged--;
+          }
         }
         draft.isStarted = true;
         draft.board[action.row][action.column] = tile;
@@ -93,6 +102,9 @@ export const MineSweeperReducer = (
         calculateValue(draft.board, action.numRows, action.numColumns);
         draft.isAlive = true;
         draft.isStarted = false;
+        draft.numBombs = action.numBombs;
+        draft.correctFlagged = 0;
+        draft.wrongFlagged = 0;
       });
     default:
       return state;
@@ -104,6 +116,7 @@ const swapWithAnotherTile = (board, row, column) => {
   const tile = board[row][column];
   const numRows = board.length;
   const numColumns = board[0].length;
+  if (numRows <= 1 && numColumns <= 1) return;
   while (!swapped) {
     const row2 = Math.floor(Math.random() * numRows);
     const column2 = Math.floor(Math.random() * numColumns);

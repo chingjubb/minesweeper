@@ -6,7 +6,7 @@
 }
 
 .unclickedTile {
-	background: yellow;
+	background: #56b000;
 	cursor: pointer;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .flagged {
-	background: yellow;
+	background: #56b000;
 	text-align: center;
 	line-height: 30px;
 }
