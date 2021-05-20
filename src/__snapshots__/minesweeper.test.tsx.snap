@@ -1,0 +1,208 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Clicked a tile 1`] = `
+<div
+  className="gameBoard"
+>
+  <div>
+    <div>
+      <div
+        className="row"
+      >
+        <div
+          className="tile unclickedTile"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="clickedTile tile oneBomb"
+        >
+          1
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Flag a bomb 1`] = `
+<div
+  className="gameBoard"
+>
+  <div>
+    <div>
+      <div
+        className="row"
+      >
+        <div
+          className="tile unclickedTile"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="tile flagged"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+        >
+          🚩
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Game over state 1`] = `
+<div
+  className="gameBoard"
+>
+  <div>
+    <div>
+      <div
+        className="row"
+      >
+        <div
+          className="bomb tile"
+        >
+          💣
+        </div>
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="tile unclickedTile"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <div>
+      Game Over!
+    </div>
+    <button
+      className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+      disabled={false}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex={0}
+      type="button"
+    >
+      <span
+        className="MuiButton-label"
+      >
+        Restart Game
+      </span>
+    </button>
+  </div>
+</div>
+`;
+
+exports[`New game board 1`] = `
+<div
+  className="gameBoard"
+>
+  <div>
+    <div>
+      <div
+        className="row"
+      >
+        <div
+          className="tile unclickedTile"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+        />
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="tile unclickedTile"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`You won state 1`] = `
+<div
+  className="gameBoard"
+>
+  <div>
+    <div>
+      <div
+        className="row"
+      >
+        <div
+          className="tile flagged"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+        >
+          🚩
+        </div>
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="tile unclickedTile"
+          onClick={[Function]}
+          onContextMenu={[Function]}
+        />
+      </div>
+    </div>
+  </div>
+  <div>
+    <div>
+      You Won!
+    </div>
+    <button
+      className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+      disabled={false}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex={0}
+      type="button"
+    >
+      <span
+        className="MuiButton-label"
+      >
+        Restart Game
+      </span>
+    </button>
+  </div>
+</div>
+`;
