@@ -1,9 +1,9 @@
 import { useReducer, Dispatch } from "react";
 import { produce } from "immer";
 
-export const NUM_ROW = 5;
-export const NUM_COLUMN = 5;
-export const NUM_BOMBS = 1;
+export const NUM_ROW = 8;
+export const NUM_COLUMN = 8;
+export const NUM_BOMBS = 8;
 
 export type Tile = {
   isBomb: boolean;

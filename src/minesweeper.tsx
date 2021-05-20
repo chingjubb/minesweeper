@@ -27,11 +27,13 @@ export const Minesweeper = ({ gameState, dispatch }: MinesweeperProps) => {
 				return <Square {...tile}
 							   key={`${row}.${column}.${tile.clicked}.${tile.flagged}`}
 							   onRightClick={() => {
+							   		if (!isAlive) return;
 							   		dispatch({type: ActionTypes.setFlag,
 							   				  row,
 							   				  column})
 							   }}
 							   onClick={() => {
+							   		if (!isAlive) return;
 							   		dispatch({type: ActionTypes.clickTile,
 							   				  row,
 							   				  column})}
@@ -53,7 +55,7 @@ export const Minesweeper = ({ gameState, dispatch }: MinesweeperProps) => {
 
 	return (<div className={styles.gameBoard}>
 				<div>{renderBoard()}</div>
-				{hasWon && <div>You Won! {restartGameButton()}</div>}
-				{!isAlive && <div>Game Over! {restartGameButton()}</div>}
+				{hasWon && <div><div>You Won!</div>{restartGameButton()}</div>}
+				{!isAlive && <div><div>Game Over!</div>{restartGameButton()}</div>}
 			</div>);
 };
