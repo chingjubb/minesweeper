@@ -16,10 +16,8 @@ export const countSeven = (num: number): number => {
 // using dynamic programming -> much faster
 export const countSevenDP = (num: number, map = {}): number => {
 	if (num < 7) return 0;
-	map = map || {}
-	if (map[num]) {
-		return map[num];
-	}
+	if (map[num]) return map[num];
+
 	const baseCount = hasSeven(num) ? 1 : 0;
 	let remainCount = 0;
 	if (map[num - 1]) {
