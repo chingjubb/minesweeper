@@ -113,3 +113,18 @@ describe('calculateValue', () => {
 	});
 });
 
+describe('initializeBoard', () => {
+	it('should init a board and add bombs', () => {
+		const board = initializeBoard(5, 6, 10);
+		expect(board.length).toEqual(5);
+		expect(board[0].length).toEqual(6);
+		let numBombs = 0;
+		board.map((row) => {
+			return row.map((column) => {
+				if (column.isBomb) numBombs++;
+				return column.isBomb;
+			});
+		});
+		expect(numBombs).toEqual(10);
+	});
+});
