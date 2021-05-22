@@ -46,4 +46,11 @@ The file is `count_seven.ts` and `count_seven.test.ts`
 
 `npm run test` to run tests.
 
+I wrote two solutions, one is using for loop, one is using Dynamic programming.
+
+I compare the time spent for each method, and dynamic programming is faster.
+
+countSeven(1000) = 271
+
+
 
