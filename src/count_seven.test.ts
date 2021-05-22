@@ -1,15 +1,20 @@
-import { countSeven, hasSeven } from './count_seven';
+import { countSeven, hasSeven, countSevenDP } from './count_seven';
 
-describe('countSeven', () => {
+describe('countSeven using for loop', () => {
 	it('should return the correct value', () => {
-		expect(countSeven(0)).toEqual(0);
-		expect(countSeven(1)).toEqual(0);
-		expect(countSeven(7)).toEqual(1);
-		expect(countSeven(17)).toEqual(2);
-		expect(countSeven(20)).toEqual(2);
-		expect(countSeven(70)).toEqual(8);
-		expect(countSeven(100)).toEqual(19);
+		const start = Date.now();
 		expect(countSeven(1000)).toEqual(271);
+		const end = Date.now();
+		console.log('spent time for countSeven', end - start);
+	});
+});
+
+describe('countSevenDP using dynamic programming', () => {
+	it('should return the correct value', () => {
+		const start = Date.now();
+		expect(countSevenDP(1000)).toEqual(271);
+		const end = Date.now();
+		console.log('spent time for countSevenDP', end - start);
 	});
 });
 
