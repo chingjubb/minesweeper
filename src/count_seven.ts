@@ -21,12 +21,13 @@ export const countSevenDP = (num: number, map = {}): number => {
 		return map[num];
 	}
 	const baseCount = hasSeven(num) ? 1 : 0;
+	let remainCount = 0;
 	if (map[num - 1]) {
-		const result =  baseCount + map[num - 1];
-		map[num] = result;
-		return result;
+		remainCount = map[num - 1];
+	} else {
+		remainCount = countSevenDP(num - 1, map);
 	}
-	const count = baseCount + countSevenDP(num - 1, map);
+	const count = baseCount + remainCount;
 	map[num] = count;
 	return count;
 }
