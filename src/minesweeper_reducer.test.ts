@@ -1,4 +1,4 @@
-import { MineSweeperReducer, ActionTypes, GameState, Tile, initializeBoard } from './minesweeper_reducer';
+import { MineSweeperReducer, ActionTypes, GameState, Tile, initializeBoard, calculateValue } from './minesweeper_reducer';
 
 const board: Tile[][] =
 			 [[{row: 0, column: 0, isBomb: true, value: 0, clicked: false, flagged: false}],
@@ -89,3 +89,27 @@ describe('MineSweeperReducer', () => {
 		});
 	});
 });
+
+describe('calculateValue', () => {
+	it('should calculate number of bombs next to each tile', () => {
+		const config = [[0,1,0], [1,1,0], [1,1,1]];
+		const board = config.map((row, rowIndex) => {
+			return row.map((column, columnIndex) => {
+				return { isBomb: column === 1,
+						  value: 0,
+						  clicked: false,
+						  flagged: false,
+						  row: rowIndex,
+						  column: columnIndex };
+			})
+		});
+		calculateValue(board, 3, 3);
+		const values = board.map((row) => {
+			return row.map((column) => {
+				return column.value;
+			})
+		});
+		expect(values).toEqual([[3,2,2],[4,5,4],[3,4,2]]);
+	});
+});
+

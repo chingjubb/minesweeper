@@ -188,7 +188,7 @@ export const initializeBoard = (numRow, numColumn, numBombs) => {
   return board;
 }
 
-const calculateValue = (board, numRow, numColumn) => {
+export const calculateValue = (board, numRow, numColumn) => {
   // Calculate number of bombs 
   for (let i = 0; i < numRow; i++) {
     for (let j = 0; j < numColumn; j++) {
